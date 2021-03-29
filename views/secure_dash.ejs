@@ -1,0 +1,105 @@
+<%- include header.ejs %>
+<body class="fp-page">
+    <div class="fp-box">
+        
+        <div class="card">
+            <div class="body">
+                <form action="/secure" method="POST">
+                    <div class="card" style="margin-bottom:0;">
+                        <div class="body" style="padding:10px 20px 0">
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <img src="/public/assets/logo.png" height="60px"/> 
+                                </div>
+                                <div class="col-sm-8">
+                                    <div class="logo">
+                                        <a href="javascript:void(0);"><b>UCC-SSO</b></a>
+                                        <small>SSO USER SECURITY PROFILE </small>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <a href="/userLogout" onclick="return confirm('Cancel Verification ?')">
+                                        <i class="material-icons md-36 text-danger">cancel</i>
+                                    </a>
+                                </div>
+                            </div><hr>
+                        </div>
+                    </div>
+                    <%- include user_snippet.ejs %>
+                    
+                    <% if(user){ %>
+                    <div class="list-group">
+                        <a href="javascript:void(0);" class="list-group-item">
+                            <h5 class="list-group-item-heading">ALTERNATIVE EMAIL</h5>
+                            <p class="list-group-item-text">
+                                <input type="email" name="alt_email" placeholder="Enter Alternative E-mail address" class="form-control" value="<%- user.alt_email %>"/>
+                            </p>
+                        </a>
+                        <% //if(user.secure_q1){ %>
+                        <a href="javascript:void(0);" class="list-group-item">
+                            <h5 class="list-group-item-heading">SECURITY QUESTION #1</h5>
+                            <p class="list-group-item-text">
+                                <select name="secure_q1" class="form-control">
+                                    <% if(questions && questions.length > 0 ){
+                                         questions.map((qs) => {
+                                    %>
+                                    <option value="<%- qs.id; %>" <%- qs.id == user.secure_q1 ? 'selected="selected"':'' %>><%- qs.question; %></option>
+                                    <% })} %>
+                                </select>
+                            </p><br>
+                            <h6 class="list-group-item-heading">ANSWER #1</h6>
+                            <p class="list-group-item-text">
+                                <input type="text" name="secure_ans1" placeholder="Security Question #1 Answer" value="<%- user.secure_ans1 %>" class="form-control"/>
+                            </p>
+                        </a>
+                        <% //} %>
+
+                        <% //if(user.secure_q2){ %>
+                            <a href="javascript:void(0);" class="list-group-item">
+                                <h5 class="list-group-item-heading">SECURITY QUESTION #2</h5>
+                                <p class="list-group-item-text">
+                                    <select name="secure_q2" class="form-control">
+                                        <% if(questions && questions.length > 0 ){
+                                             questions.map((qs) => {
+                                        %>
+                                        <option value="<%- qs.id; %>" <%- qs.id == user.secure_q2 ? 'selected="selected"':'' %>><%- qs.question; %></option>
+                                        <% })} %>
+                                    </select>
+                                </p><br>
+                                <h6 class="list-group-item-heading">ANSWER #2</h6>
+                                <p class="list-group-item-text">
+                                    <input type="text" name="secure_ans2" placeholder="Security Question #2 Answer" value="<%- user.secure_ans2 %>" class="form-control"/>
+                                </p>
+                            </a>
+                            <% //} %>
+                            <% //if(user.secure_q3){ %>
+                                <a href="javascript:void(0);" class="list-group-item">
+                                    <h5 class="list-group-item-heading">SECURITY QUESTION #3</h5>
+                                    <p class="list-group-item-text">
+                                        <select name="secure_q3" class="form-control">
+                                            <% if(questions && questions.length > 0 ){
+                                                 questions.map((qs) => {
+                                            %>
+                                            <option value="<%- qs.id; %>" <%- qs.id == user.secure_q3 ? 'selected="selected"':'' %>><%- qs.question; %></option>
+                                            <% })} %>
+                                        </select>
+                                    </p><br>
+                                    <h6 class="list-group-item-heading">ANSWER #3</h6>
+                                    <p class="list-group-item-text">
+                                        <input type="text" name="secure_ans3" placeholder="Security Question #3 Answer" value="<%- user.secure_ans3 %>" class="form-control"/>
+                                    </p>
+                                </a>
+                                <% //} %>
+                                <input type="hidden" name="id" value="<%- user.id || 0%>"/>
+                    </div>
+
+                    <% } %>
+                    <button  onclick="return confirm('Save Data?')" class="btn btn-block btn-lg bg-pink waves-effect" type="submit"><i class="fa fa-power-off"></i> SAVE SECURITY DATA</button>
+                    <div class="row m-t-20 m-b--5 align-center">
+                        <small>&copy <%= new Date().getFullYear() %> MIS-DICTS</small>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <%- include footer.ejs %>

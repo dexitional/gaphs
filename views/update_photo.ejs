@@ -1,0 +1,42 @@
+<%- include header.ejs %>
+<body class="fp-page">
+    <div class="fp-box">
+        <div class="card">
+            <div class="body">
+                <form action="/photopost" method="POST" enctype="multipart/form-data">
+                    
+                    <%- include logo_snippet.ejs %>
+                    <%- include nav_snippet.ejs %>
+                    <hr>
+                    
+                    <div class="list-group">
+                        <a href="javascript:void(0);" class="list-group-item">
+                            <h5 class="list-group-item-heading">CHOOSE PHOTOS</h5>
+                            <p class="list-group-item-text">
+                               <input type="file" multiple name="photos" class="form-control"/>
+                            </p>
+                            <small style="font-size:10px;font-weight:bolder;line-height:10px;"> Student pictures should be tagged with registration number. Ex: <b>BS/CDM/19/00023</b> !</small>
+                        </a>
+                       
+                        <a href="javascript:void(0);" class="list-group-item">
+                            <h5 class="list-group-item-heading">PHOTO CATEGORY</h5>
+                            <p class="list-group-item-text">
+                                <select name="group_id" class="form-control">
+                                    <option value="01" >STUDENT</option>
+                                    <option value="02" >STAFF</option>
+                                    <option value="03" >NSS</option>
+                                    <option value="06" >CODE EXT STAFF</option>
+                                </select>
+                            </p>
+                        </a>
+                    </div>
+                    <button class="btn btn-block btn-lg bg-pink waves-effect" id="changebtn" type="submit">UPLOAD PHOTOS</button>
+                    <input type="hidden" name="print" value="0">
+                    <div class="row m-t-20 m-b--5 align-center">
+                        <small>&copy <%= new Date().getFullYear() %></small>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+ <%- include footer.ejs %>

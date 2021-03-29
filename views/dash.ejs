@@ -1,0 +1,22 @@
+<%- include header.ejs %>
+<body class="fp-page">
+    <div class="fp-box">
+        
+        <div class="card">
+            <div class="body">
+                    <%- include logo_snippet.ejs %>
+                    <%- include nav_snippet.ejs %>
+                    <%- include(link) %>
+
+                    
+
+                   <!--
+                    <a href="/userLogout" onclick="return confirm('Do you want to logout?')" class="btn btn-block btn-lg bg-pink waves-effect"><i class="fa fa-power-off"></i> LOGOUT</a>
+                    <div class="row m-t-20 m-b--5 align-center">
+                        <small>&copy <%= new Date().getFullYear() %> MIS-DICTS</small>
+                    </div>
+                   -->
+            </div>
+        </div>
+    </div>
+    <%- include footer.ejs %>

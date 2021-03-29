@@ -1,0 +1,58 @@
+<%- include header.ejs %>
+<body class="fp-page">
+    <div class="fp-box">
+        
+        <div class="card">
+            <div class="body">
+                    <%- include logo_snippet.ejs %>
+                    <%- include nav_snippet.ejs %>
+                    <%- include search_snippet.ejs %>
+                    <div class="list-group">
+                        <% if(msg != null){ %>
+                        <a href="#" class="list-group-item">
+                            <h5 class="list-group-item-heading"><%- msg.toUpperCase() %></h5>
+                        </a>
+                        <% } %>
+                        
+                        <%
+                           if(result && result.length > 0){
+                               for(var row of result){
+                        %>
+                        <div class="media list-group-item" style="margin-bottom:0">
+                            <div class="media-left">
+                                <img class="media-object" src="<%- row.path %>" height="40">
+                            </div>
+                            <div class="media-body">
+                                <h5 class="list-group-item-heading"><%- row.user_tag %> - <%- row.group_name %></h5>
+                                <p class="list-group-item-text">
+                                    <div class="btn-group">
+                                        <a href="<%- row.path %>" target="_blank" class="btn-xs btn btn-info text-white">VIEW</a>
+                                        <a href="mail-photo/<%- row.photo_id %>?user_tag=<%- row.user_tag %>" onclick="return !confirm('Mail Photo for Printing?');"class="btn-xs btn btn-warning">MAIL</a>
+                                        <!--<a href="del-photo/<%- row.photo_id %>?user_tag=<%- row.user_tag %>" class="btn-xs btn btn-danger">DEL</a>-->
+                                    </div>
+                                </p>
+                            </div>
+                        </div>
+                        <% }} %>
+
+                       
+                       
+                       
+                        <!--
+                        <a href="/secure" class="list-group-item btn btn-warning">
+                            <i class="material-icons">lock</i>
+                            <b class="text-white">UPDATE USER SECURITY DATA</b>
+                        </a>
+                        -->
+                    </div>
+
+                   
+                    <a href="/userLogout" onclick="return confirm('Do you want to logout?')" class="btn btn-block btn-lg bg-pink waves-effect"><i class="fa fa-power-off"></i> LOGOUT</a>
+                    <div class="row m-t-20 m-b--5 align-center">
+                        <small>&copy <%= new Date().getFullYear() %> MIS-DICTS</small>
+                    </div>
+               
+            </div>
+        </div>
+    </div>
+    <%- include footer.ejs %>

@@ -1,0 +1,44 @@
+<%- include header.ejs %>
+<script type="text/javascript">
+    <% if( return_url ){ %>
+    setTimeout(function(){
+        window.location='<%- return_url  || "/userlogin" %>';
+        //window.location.back();
+    },3000);
+    <% } %>
+   
+</script>
+
+<body class="fp-page">
+    <div class="fp-box">
+        <div class="card">
+            <div class="body">
+                <form id="forgot_password" method="POST">
+                    <div class="card" style="margin-bottom:0;">
+                        <div class="body" style="padding:10px 20px 0">
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <img src="/public/assets/logo.png" height="60px"/> 
+                                </div>
+                                <div class="col-sm-10">
+                                    <div class="logo">
+                                        <a href="javascript:void(0);"><b>UCC-UPC</b></a>
+                                        <small>UNIVERSAL PASSWORD CHANGER</small>
+                                    </div>
+                                </div>
+                            </div><hr>
+                        </div>
+                    </div>
+                    <%- include user_snippet.ejs %>
+                    <div class="alert alert-success">
+                        <p><%- msg %></p>
+                    </div><hr>
+                    <!--<a href="#" class="btn btn-block btn-lg bg-pink waves-effect">Return to Previous Application!</a>-->
+                    <div class="row m-t-20 m-b--5 align-center">
+                        <small>&copy <%= new Date().getFullYear() %> MIS - DICTS</small>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <%- include footer.ejs %>

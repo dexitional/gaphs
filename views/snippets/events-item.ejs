@@ -1,0 +1,28 @@
+<div class="item-cover">
+    <% if(rows && rows.length > 0){
+        for(var row of rows){
+    %>
+    <a href="manage-photo" class="item-link row">
+        <div class="col-sm-12 hidden">
+            <img src="/public/assets/logo.png" height="60px"/> 
+        </div>
+        <div class="col-sm-12">
+            <h5 class="item-title"><%- row.title %></h5>
+        </div>
+        <div class="col-sm-12">
+            <p class="item-content hidden"><%- row.description %></p>
+            <p class="item-footer">
+                    <span class="item-subfoot">VENUE : <%- row.venue.toUpperCase() %></span>
+                    <span class="item-subfoot">DATE : <%- row.date.toUpperCase() %></span>
+                    <span class="item-subfoot">TIME : <%- row.time.toUpperCase() %></span>
+            </p>
+        </div>
+    </a>
+    <% }}else{ %>
+        <a href="<%- row.id %>" class="item-link row">
+           <div class="col-sm-12">
+                <h5 class="item-title">No News Articles Published ...</h5>
+            </div>
+        </a>
+        <% } %>
+</div>

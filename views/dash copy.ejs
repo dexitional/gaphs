@@ -1,0 +1,35 @@
+<%- include header.ejs %>
+<body class="fp-page">
+    <div class="fp-box">
+        
+        <div class="card">
+            <div class="body">
+                    <%- include logo_snippet.ejs %>
+                    <%- include user_snippet.ejs %>
+                    <div class="list-group">
+                        <a href="manage-photo" class="list-group-item">
+                            <h5 class="list-group-item-heading">MANAGE PHOTO DATABASE</h5>
+                            <p class="list-group-item-text"><small>SEARCH FOR EXISTING PHOTO</small></p>
+                        </a>
+                        <a href="update-photo" class="list-group-item">
+                            <h5 class="list-group-item-heading">UPDATE PHOTO DATABASE</h5>
+                            <p class="list-group-item-text"><small>UPLOAD PHOTOS INTO SYSTEM</small></p>
+                        </a>
+                        <!--
+                        <a href="/secure" class="list-group-item btn btn-warning">
+                            <i class="material-icons">lock</i>
+                            <b class="text-white">UPDATE USER SECURITY DATA</b>
+                        </a>
+                        -->
+                    </div>
+
+                   
+                    <a href="/userLogout" onclick="return confirm('Do you want to logout?')" class="btn btn-block btn-lg bg-pink waves-effect"><i class="fa fa-power-off"></i> LOGOUT</a>
+                    <div class="row m-t-20 m-b--5 align-center">
+                        <small>&copy <%= new Date().getFullYear() %> MIS-DICTS</small>
+                    </div>
+               
+            </div>
+        </div>
+    </div>
+    <%- include footer.ejs %>

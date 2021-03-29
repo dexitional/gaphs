@@ -1,0 +1,41 @@
+<%- include header.ejs %>
+
+<body class="fp-page">
+    <div class="fp-box">
+        
+        <div class="card">
+            <div class="body">
+                <form action="/userlogin" method="POST">
+                    <%- include logo_snippet.ejs %>
+                    <% if(msg != null){ %>
+                    <div class="alert alert-warning msg">
+                        <p><small><%- msg %></small></p>
+                    </div>
+                    <% } %>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="material-icons">email</i>
+                        </span>
+                        <div class="form-line">
+                            <input type="text" class="form-control" name="username" placeholder="USERNAME" required autofocus>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="material-icons">lock</i>
+                        </span>
+                        <div class="form-line">
+                            <input type="password" class="form-control" name="password" placeholder="PASSWORD" required autofocus>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-block btn-lg bg-pink waves-effect" type="submit">SIGN IN</button>
+
+                    <div class="row m-t-20 m-b--5 align-center">
+                        <small>&copy <%= new Date().getFullYear() %> MIS - DICTS.</small>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <%- include footer.ejs %>

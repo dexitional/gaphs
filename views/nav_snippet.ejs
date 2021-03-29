@@ -1,0 +1,10 @@
+<div class="btn-group nav-btn">
+    <a href="/news" class="btn btn-xs btn-warning <%- tab == 'news' ? 'active': '';%>">NEWS</a>
+    <a href="/events" class="btn btn-xs btn-warning <%- tab == 'events' ? 'active': '';%>">EVENTS</a>
+    <a href="/executives" class="btn btn-xs btn-warning <%- tab == 'executives' ? 'active': '';%>">EXECUTIVES</a>
+    <a href="/circulars" class="btn btn-xs btn-warning <%- tab == 'circulars' ? 'active': '';%>">CIRCULARS</a>
+    <a href="/membership" class="btn btn-xs <%- user != null ? 'logactive': 'memactive';%>"><%- user != null ? 'LOGOUT': 'MEMBERSHIP';%></a>
+    
+</div>
+       
+   

@@ -1,0 +1,8 @@
+node_modules
+photos/staff/*
+photos/student/*
+photos/code/*
+photos/nss/*
+photos/applicants/*
+config/staff/*
+config/database.js

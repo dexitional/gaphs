@@ -1,0 +1,8 @@
+[
+    {"name":"Ebenezer Kwabena Blay Ackah","username": "dexitional", "password": "kiblee007", "role": "all"},
+    {"name":"Siegfreid Koku Mawuena","username": "skoku", "password": "p@ssw0rd1234", "role": "all"},
+    {"name":"Ezekiel Jackson","username": "nana", "password": "p@ssw0rd1234", "role": "all"},
+    {"name":"Samuel Richmond Panyin","username": "panyin", "password": "p@ssw0rd1234", "role": "all"},
+    {"name":"Student Photo Admin","username": "studadmin", "password": "123456", "role": "01"},
+    {"name":"Staff Photo Admin","username": "staffadmin", "password": "123456", "role": "02"}
+]

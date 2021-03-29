@@ -1,0 +1,29 @@
+{
+  "name": "cdn",
+  "version": "1.0.0",
+  "description": "Content Delivery and Photo Management System for UCC",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "ejs-mate": "^3.0.0",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.2.1",
+    "express-session": "^1.17.1",
+    "helmet": "^4.4.1",
+    "moment": "^2.29.1",
+    "mysql": "^2.18.1",
+    "node-sqlite3": "github:a-was/node-sqlite3",
+    "nodemailer": "^6.5.0",
+    "polka": "^0.5.2",
+    "request": "^2.88.2",
+    "sqlite-async": "^1.1.1",
+    "sqlite3": "^5.0.2"
+  }
+}

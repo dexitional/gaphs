@@ -1,0 +1,28 @@
+<div class="item-cover">
+
+    <% if(rows && rows.length > 0){
+         for(var row of rows){
+    %>
+    <a href="<%- row.id %>" class="item-link row">
+        <div class="col-sm-3">
+            <img src="<%- row.image %>" class="img-responsive"/> 
+        </div>
+        <div class="col-sm-9">
+            <h5 class="item-title"><%- row.title %></h5>
+        </div>
+        <div class="col-sm-12">
+            <p class="item-content"><%- row.content %></p>
+            <p class="item-footer">
+                    <span class="item-subfoot">PUBLISHED : <%- row.period.toUpperCase() %></span>
+                    <span class="item-subfoot">BY : <%- row.author.toUpperCase() %></span>
+            </p>
+        </div>
+    </a>
+    <% }}else{ %>
+    <a href="<%- row.id %>" class="item-link row">
+       <div class="col-sm-12">
+            <h5 class="item-title">No News Articles Published ...</h5>
+        </div>
+    </a>
+    <% } %>
+</div>

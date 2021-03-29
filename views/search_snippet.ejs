@@ -1,0 +1,16 @@
+    <% if(user){ %>
+    <form name="search-form" action="/search-photo" method="post">
+    <div class="card">
+        <div class="body">
+            <div class="media" style="margin-bottom:0">
+                <div class="media-left">
+                    <input type="text" name="search" value="<%- query != null ? query : '' %>" class="search-input" placeholder=""/>
+                </div>
+                <div class="media-body">
+                   <button type="submit" class="search-btn" >SEARCH PIX</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </form>
+    <% } %>
