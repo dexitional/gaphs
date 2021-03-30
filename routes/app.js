@@ -80,20 +80,22 @@ module.exports = (function() {
             })
         }
         res.render('dash',{
-            user:req.session.user,
+            user: req.session.user,
             link:'snippets/news-item',
             tab: 'news',
-            rows
+            rows,
+            msg: null
         });
     });
 
     app.get('/events',async(req,res) => {
         var rows = await db.all('SELECT * FROM events');
         res.render('dash',{
-            user:req.session.user,
+            user: req.session.user,
             link:'snippets/events-item',
             tab: 'events',
-            rows
+            rows,
+            msg: null
         });
     });
 
@@ -101,10 +103,11 @@ module.exports = (function() {
     app.get('/executives',async(req,res) => {
         var rows = await db.all('SELECT * FROM executives where active = 1');
         res.render('dash',{
-            user:req.session.user,
+            user: req.session.user,
             link:'snippets/executives-item',
             tab: 'executives',
-            rows
+            rows,
+            msg: null
         });
     });
 
@@ -112,34 +115,148 @@ module.exports = (function() {
     app.get('/circulars',async(req,res) => {
         var rows = await db.all('SELECT * FROM circulars where status = 1');
         res.render('dash',{
-            user:req.session.user,
+            user: req.session.user,
             link:'snippets/circulars-item',
             tab: 'circulars',
-            rows
+            rows,
+            msg: null
         });
     });
+
+    app.get('/membership',async(req,res) => {
+        //var rows = await db.all('SELECT * FROM circulars where status = 1');
+        res.render('dash',{
+            user: req.session.user,
+            link:'snippets/memships-item',
+            tab: 'membership',
+            msg: null
+        });
+    });
+
+    app.get('/signin',async(req,res) => {
+        //var rows = await db.all('SELECT * FROM circulars where status = 1');
+        res.render('dash',{
+            user: req.session.user,
+            link:'snippets/signin-item',
+            tab: 'signin',
+            msg: null
+        });
+    });
+
+    app.post('/signin',async(req,res) => {
+        const { username,password } = req.body;
+        var row = await db.get('SELECT m.id,m.indexno,m.level,m.fname,m.lname,m.phone,m.email,m.username,m.dob,m.photo,p.title as program FROM members m left join programs p on m.prog_id = p.id where (m.username = "'+username+'" or m.indexno = "'+username+'") and password = "'+password+'"');
+        if(row){
+           req.session.user = row;
+           req.session.authenticated = true;
+           req.session.save();
+           res.redirect('/profile');
+           
+        }else{
+            res.render('dash',{
+                user: req.session.user,
+                link:'snippets/signin-item',
+                tab: 'signin',
+                msg: 'WRONG CREDENTIALS PROVIDED!'
+            });
+        }
+    });
+
+
+    app.get('/signup',async(req,res) => {
+        //var rows = await db.all('SELECT * FROM circulars where status = 1');
+        res.render('dash',{
+            user: req.session.user,
+            link:'snippets/signup-item',
+            tab: 'signup',
+            msg: null
+        });
+    });
+
+    app.post('/signup',async(req,res) => {
+        var path;
+        var dest = './public/photos/';
+        if(req.files){
+            var file = req.files.photo;
+            path = dest+req.body.indexno.toLowerCase()+'.'+file.mimetype.split('/')[1];
+            file.mv(path, async(err) =>{
+                if (err) return res.status(500).send(err);
+            });
+        }
+        console.log(req.body);
+        if(req.body.id > 0){
+             var sql = path ? `UPDATE members SET indexno = '${req.body.indexno}', phone = '${req.body.phone}', username = '${req.body.username}', password = '${req.body.password}', email = '${req.body.email}', fname = '${req.body.fname}', lname = '${req.body.lname}', dob = '${req.body.dob}', level = ${req.body.level}, prog_id = ${req.body.prog_id},photo = '${path}' WHERE id = ${req.body.id}` : `UPDATE members SET indexno = '${req.body.indexno}', phone = '${req.body.phone}', username = '${req.body.username}', password = '${req.body.password}', email = '${req.body.email}', fname = '${req.body.fname}', lname = '${req.body.lname}', dob = '${req.body.dob}', level = ${req.body.level}, prog_id = ${req.body.prog_id} WHERE id = ${req.body.id}`;
+             var ins = await db.run(sql);
+             console.log(ins);
+        }else{
+            var sql = path ? `INSERT INTO members (indexno,phone,username,password,email,fname,lname,dob,level,prog_id,status,registered,photo) VALUES ('${req.body.indexno}','${req.body.phone}','${req.body.username}','${req.body.password}','${req.body.email}','${req.body.fname}','${req.body.lname}','${req.body.dob}',${req.body.level},${req.body.prog_id},1,1,'${path}')` : `INSERT INTO members (indexno,phone,username,password,email,fname,lname,dob,level,prog_id,status,registered) VALUES ('${req.body.indexno}','${req.body.phone}','${req.body.username}','${req.body.password}','${req.body.email}','${req.body.fname}','${req.body.lname}','${req.body.dob}',${req.body.level},${req.body.prog_id},1,1)`;
+            var ins = await db.run(sql);
+            console.log(ins);
+        }
+        if(ins){
+            var row = await db.get('SELECT m.id,m.indexno,m.level,m.fname,m.lname,m.phone,m.email,m.username,m.dob,m.photo,p.title as program FROM members m left join programs p on m.prog_id = p.id where m.indexno = "'+req.body.indexno+'"');
+            console.log(row);
+            req.session.user = row;
+            req.session.authenticated = true;
+            req.session.save();
+            res.redirect('/profile');
+        }else{
+            res.render('dash',{
+                user: req.session.user,
+                link:'snippets/signup-item',
+                tab: req.session.user ? 'profile':'signup',
+                msg: "PROCESS FAILED!"
+            });
+        }
+    });
+
+
+
+
 
 
     /* Secured Routes */
 
+    app.get('/apps', isAuthenticated,async(req,res) => {
+        res.render('dash',{
+            user:req.session.user,
+            link:'snippets/apps-item',
+            tab: 'apps',
+        });
+    });
+
     app.get('/resources', isAuthenticated,async(req,res) => {
-        var rows = await db.all('SELECT * FROM executives where status = 1');
+        var rows = await db.all('SELECT * FROM resources where status = 1');
         res.render('dash',{
             user:req.session.user,
             link:'snippets/resources-item',
             tab: 'news',
-            rows
+            rows,
+            msg: null
         });
     });
 
-    app.get('/profile/:id', isAuthenticated,async(req,res) => {
-        var id = req.params.id;
-        var row = await db.all('SELECT * FROM members where id = '+id);
+
+
+    app.get('/profile', isAuthenticated,async(req,res) => {
         res.render('dash',{
             user:req.session.user,
             link:'snippets/profile-item',
             tab: 'profile',
-            row
+            row:  req.session.user,
+            msg: null
+        });
+    });
+
+
+    app.get('/manage-profile/:id', isAuthenticated,async(req,res) => {
+        var id = req.params.id;
+        var row = await db.get('SELECT * FROM members where id = '+id);
+        res.render('dash',{
+            user: row,
+            link:'snippets/signup-item',
+            tab: 'profile',
+            msg: null
         });
     });
 
@@ -151,7 +268,8 @@ module.exports = (function() {
             user:req.session.user,
             link:'snippets/dues-item',
             tab: 'dues',
-            rows
+            rows,
+            msg: null
         });
     });
 
@@ -162,7 +280,8 @@ module.exports = (function() {
             user:req.session.user,
             link:'snippets/circulars-item',
             tab: 'circulars',
-            rows
+            rows,
+            msg: null
         });
     });
 

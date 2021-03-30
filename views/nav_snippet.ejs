@@ -2,9 +2,15 @@
     <a href="/news" class="btn btn-xs btn-warning <%- tab == 'news' ? 'active': '';%>">NEWS</a>
     <a href="/events" class="btn btn-xs btn-warning <%- tab == 'events' ? 'active': '';%>">EVENTS</a>
     <a href="/executives" class="btn btn-xs btn-warning <%- tab == 'executives' ? 'active': '';%>">EXECUTIVES</a>
-    <a href="/circulars" class="btn btn-xs btn-warning <%- tab == 'circulars' ? 'active': '';%>">CIRCULARS</a>
-    <a href="/membership" class="btn btn-xs <%- user != null ? 'logactive': 'memactive';%>"><%- user != null ? 'LOGOUT': 'MEMBERSHIP';%></a>
-    
+    <% if(!user){ %>
+    <a href="/signin" class="btn btn-xs <%- tab == 'signin' ? 'active': '';%>">SIGN IN</a>
+    <a href="/signup" class="btn btn-xs <%- tab == 'signup' ? 'active': '';%>">SIGN UP</a>
+    <% }else{ %>
+    <a href="/profile" class="btn btn-xs <%- tab == 'profile' ? 'active': '';%>">PROFILE</a>
+    <a href="/apps" class="btn btn-danger btn-xs <%- tab == 'apps' ? 'active': '';%>">APPS</a>
+    <a href="/userlogout" class="btn btn-xs <%- tab == 'signup' ? 'active': '';%>">LOGOUT</a>
+   
+    <% } %>
 </div>
        
    

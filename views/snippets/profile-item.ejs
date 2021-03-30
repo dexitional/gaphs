@@ -1,0 +1,59 @@
+<div class="item-cover">
+    <div class="card">
+        <div class="body">
+                <div class="row">
+                   <div class="col-sm-6">
+                        <div class="list-group">
+                            <a href="/manage-profile/<%- user.id %>" class="list-group-item">
+                               <button class="btn btn-block btn-xs btn-warning"><b>MANAGE PROFILE</b></button>
+                            </a>
+                            <a href="javascript:void(0);" class="list-group-item">
+                                <img src="<%- row.photo || '/public/assets/profile_img.png' %>" width="150px;"/>
+                            </a>
+                            <a href="javascript:void(0);" class="list-group-item">
+                                <h5 class="list-group-item-heading">SURNAME</h5>
+                                <p class="list-group-item-text"><small><%- row.lname.toUpperCase() %></small></p>
+                            </a>
+                            <a href="javascript:void(0);" class="list-group-item">
+                                <h5 class="list-group-item-heading">OTHERNAME(S)</h5>
+                                <p class="list-group-item-text"><small><%- row.fname.toUpperCase() %></small></p>
+                            </a>
+                            <a href="javascript:void(0);" class="list-group-item">
+                                <h5 class="list-group-item-heading">USERNAME</h5>
+                                <p class="list-group-item-text">@<small><%- row.username.toUpperCase() %></small></p>
+                            </a>
+                           
+                        </div>
+                   </div>
+
+                    <div class="col-sm-6">
+                        <div class="list-group">
+                            <a href="javascript:void(0);" class="list-group-item">
+                                <h5 class="list-group-item-heading">PROGRAMME</h5>
+                                <p class="list-group-item-text"><small><%- row.program.toUpperCase() %></small></p><br>
+                                <h6 class="list-group-item-heading">LEVEL OR YEAR</h6>
+                                <p class="list-group-item-text"><%- row.level %></p>
+                            </a>
+                            <a href="javascript:void(0);" class="list-group-item">
+                                <h5 class="list-group-item-heading">INDEX NUMBER</h5>
+                                <p class="list-group-item-text"><small><%- row.indexno.toUpperCase() %></small></p>
+                            </a>
+                            <a href="javascript:void(0);" class="list-group-item">
+                                <h5 class="list-group-item-heading">PHONE NUMBER</h5>
+                                <p class="list-group-item-text"><small><%- row.phone.toUpperCase() %></small></p>
+                            </a>
+                           <a href="javascript:void(0);" class="list-group-item" style="overflow-wrap: break-word;">
+                                <h5 class="list-group-item-heading">EMAIL ADDRESS</h5>
+                                <p class="list-group-item-text"><small><%- row.email.toUpperCase() %></small></p>
+                            </a>
+                            <a href="javascript:void(0);" class="list-group-item">
+                                <h5 class="list-group-item-heading">DATE OF BIRTH</h5>
+                                <p class="list-group-item-text"><small><%- row.dob %></small></p>
+                            </a>
+                        </div>
+                    </div>
+                   
+          
+        </div>
+    </div>
+</div>
