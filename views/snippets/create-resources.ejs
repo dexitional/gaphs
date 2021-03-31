@@ -1,0 +1,63 @@
+<div class="item-cover">
+    <div class="card">
+        <div class="body">
+            <form action="/create-resources" method="POST" enctype="multipart/form-data">
+                <div class="row">
+                   <div class="col-sm-12">
+                        <div class="list-group">
+                            <% if(row){ %>
+                            <a href="javascript:void(0);" class="list-group-item">
+                                <img src="/public/assets/dwload.png" height="50px;"/>
+                            </a>
+                            <% } %>
+                            <a href="javascript:void(0);" class="list-group-item">
+                                <h5 class="list-group-item-heading">UPLOAD PDF FILE</h5>
+                                <p class="list-group-item-text">
+                                <input type="file" name="pdf" class="form-control"/>
+                                </p>
+                                <small style="font-size:10px;font-weight:bolder;line-height:10px;"> File support: <em>PDF only</em></small>
+                            </a>
+                            <a href="javascript:void(0);" class="list-group-item">
+                                <h5 class="list-group-item-heading">TITLE</h5>
+                                <p class="list-group-item-text"><input type="text" name="title" value="<%- row && row.title %>" placeholder="Enter Title" class="form-control"/></p>
+                            </a>
+                            <a href="javascript:void(0);" class="list-group-item">
+                                <h5 class="list-group-item-heading">PROGRAM</h5>
+                                <p class="list-group-item-text">
+                                    <select name="prog_id" class="form-control" required>
+                                        <%
+                                          if(programs.length > 0){
+                                              for(var rec of programs){
+                                        %>
+                                        <option value="<%- rec.id %>" <%- row && rec.id == row.prog_id ? 'selected="selected"':'' %>><%- rec.title.toUpperCase() %></option>
+                                        <% }} %>
+                                    </select>
+                                </p>
+                            </a>
+                            <a href="javascript:void(0);" class="list-group-item">
+                                <h5 class="list-group-item-heading">LEVEL</h5>
+                                <p class="list-group-item-text"><input type="number" name="level" value="<%- row && row.level %>" placeholder="Enter Level or Year" class="form-control"/></p>
+                            </a>
+                            <a href="javascript:void(0);" class="list-group-item">
+                                <h5 class="list-group-item-heading">VISIBILITY</h5>
+                                <p class="list-group-item-text">
+                                    <select name="status" class="form-control" required>
+                                       <option value="1" <%- row && row.status == '1' ? 'selected="selected"':'' %>>ENABLED</option>
+                                       <option value="0" <%- row && row.status == '0' ? 'selected="selected"':'' %>>DISABLED</option>
+                                    </select>
+                                </p>
+                            </a>
+                            <a href="javascript:void(0);" class="list-group-item">
+                                <input type="hidden" name="id" value="<%- row && row.id || 0 %>"/>
+                                <button class="btn btn-block btn-lg bg-pink waves-effect" id="changebtn" type="submit">SAVE</button>
+                            </a>
+                        </div>
+                   </div>
+
+                    <div class="col-sm-12 m-t-20 m-b--5 align-center">
+                        <small>&copy <%= new Date().getFullYear() %></small>
+                    </div>
+            </form>
+        </div>
+    </div>
+</div>

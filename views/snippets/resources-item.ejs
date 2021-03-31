@@ -1,27 +1,28 @@
 <div class="item-cover">
+    <a  class="item-link btn btn-xs btn-dark"><b>RESOURCES</b></a>
     <% if(rows && rows.length > 0){
         for(var row of rows){
     %>
-    <a href="manage-photo" class="item-link row">
-        <div class="col-sm-12 hidden">
-            <img src="/public/assets/logo.png" height="60px"/> 
+    <a href="<%- row.path %>" class="item-link row">
+        <div class="col-sm-2">
+            <img src="/public/assets/dwload.png" height="50px"/> 
+        </div>
+        <div class="col-sm-10">
+            <h5 class="item-title"><%- row.title.toUpperCase() %></h5>
         </div>
         <div class="col-sm-12">
-            <h5 class="item-title"><%- row.title %></h5>
-        </div>
-        <div class="col-sm-12">
-            <p class="item-content hidden"><%- row.description %></p>
             <p class="item-footer">
-                    <span class="item-subfoot">VENUE : <%- row.venue.toUpperCase() %></span>
-                    <span class="item-subfoot">DATE : <%- row.date.toUpperCase() %></span>
-                    <span class="item-subfoot">TIME : <%- row.time.toUpperCase() %></span>
+                <span class="item-subfoot">PROGRAM : <%- row.program.toUpperCase() %> / YEAR : <%- row.level %></span>
+                <% if(user && user.isAdmin){ %>
+                <span class="item-subfoot edit-resources" data-url="/create-resources?id=<%- row.id %>"><b style="color:brown;cursor:pointer;">EDIT</b></span>
+                <% }%>
             </p>
         </div>
     </a>
     <% }}else{ %>
-        <a href="<%- row.id %>" class="item-link row">
+        <a class="item-link row">
            <div class="col-sm-12">
-                <h5 class="item-title">No News Articles Published ...</h5>
+                <h5 class="item-title">No Resource published ...</h5>
             </div>
         </a>
         <% } %>

@@ -46,4 +46,29 @@ $(document).ready(function(){
         e.preventDefault();
         onScroll();
     });
+
+    $('.edit-news').click(function(){
+        location.href = $(this).data('url');
+    });
+
+    $('.edit-resources').click(function(){
+        location.href = $(this).data('url');
+    });
+
+    $('.edit-events').click(function(){
+        location.href = $(this).data('url');
+    });
+
+    $('.edit-members').click(function(){
+        location.href = $(this).data('url');
+    });
+
+    $('.edit-executives').click(function(){
+        location.href = $(this).data('url');
+    });
+
+    $('.edit-dues').click(function(){
+        location.href = $(this).data('url');
+    });
+
 });

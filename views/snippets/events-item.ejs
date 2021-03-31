@@ -2,7 +2,7 @@
     <% if(rows && rows.length > 0){
         for(var row of rows){
     %>
-    <a href="manage-photo" class="item-link row">
+    <a class="item-link row">
         <div class="col-sm-12 hidden">
             <img src="/public/assets/logo.png" height="60px"/> 
         </div>
@@ -14,7 +14,10 @@
             <p class="item-footer">
                     <span class="item-subfoot">VENUE : <%- row.venue.toUpperCase() %></span>
                     <span class="item-subfoot">DATE : <%- row.date.toUpperCase() %></span>
-                    <span class="item-subfoot">TIME : <%- row.time.toUpperCase() %></span>
+                    <span class="item-subfoot">TIME : <%- row.time.toUpperCase() %> GMT</span>
+                    <% if(user && user.isAdmin){ %>
+                    <span class="item-subfoot edit-events" data-url="/create-events?id=<%- row.id %>"><b style="color:brown;cursor:pointer;">EDIT</b></span>
+                    <% } %>
             </p>
         </div>
     </a>

@@ -72,7 +72,7 @@ module.exports = (function() {
     /* Public Routes */
 
     app.get('/news',async(req,res) => {
-        var rows = await db.all('SELECT * FROM articles where status = 1');
+        var rows = await db.all('SELECT * FROM articles where status = 1 order by id desc');
         if(rows.length > 0){
             rows = rows.map((row)=>{
                 row.period = moment(row.created_at,'YYYY-MM-DD').format('MMM DD, YYYY');
@@ -89,7 +89,7 @@ module.exports = (function() {
     });
 
     app.get('/events',async(req,res) => {
-        var rows = await db.all('SELECT * FROM events');
+        var rows = await db.all('SELECT * FROM events order by id desc');
         res.render('dash',{
             user: req.session.user,
             link:'snippets/events-item',
@@ -145,8 +145,16 @@ module.exports = (function() {
 
     app.post('/signin',async(req,res) => {
         const { username,password } = req.body;
-        var row = await db.get('SELECT m.id,m.indexno,m.level,m.fname,m.lname,m.phone,m.email,m.username,m.dob,m.photo,p.title as program FROM members m left join programs p on m.prog_id = p.id where (m.username = "'+username+'" or m.indexno = "'+username+'") and password = "'+password+'"');
+        var row = await db.get('SELECT m.id,m.indexno,m.level,m.fname,m.lname,m.phone,m.email,m.username,m.dob,m.photo,m.prog_id,p.title as program FROM members m left join programs p on m.prog_id = p.id where (m.username = "'+username+'" or m.indexno = "'+username+'") and password = "'+password+'"');
+        var user = users.filter(row => {
+           console.log(row.indexno.toLowerCase());
+           console.log(username.toLowerCase());
+           return (row.indexno.toLowerCase() == username.toLowerCase() || row.username.toLowerCase() == username.toLowerCase());
+        })
+        console.log(users);
+        console.log(user);
         if(row){
+           row.isAdmin = user && user.length > 0 ? true : false;
            req.session.user = row;
            req.session.authenticated = true;
            req.session.save();
@@ -164,11 +172,12 @@ module.exports = (function() {
 
 
     app.get('/signup',async(req,res) => {
-        //var rows = await db.all('SELECT * FROM circulars where status = 1');
+        var programs = await db.all('SELECT * FROM programs');
         res.render('dash',{
             user: req.session.user,
             link:'snippets/signup-item',
             tab: 'signup',
+            programs,
             msg: null
         });
     });
@@ -194,7 +203,7 @@ module.exports = (function() {
             console.log(ins);
         }
         if(ins){
-            var row = await db.get('SELECT m.id,m.indexno,m.level,m.fname,m.lname,m.phone,m.email,m.username,m.dob,m.photo,p.title as program FROM members m left join programs p on m.prog_id = p.id where m.indexno = "'+req.body.indexno+'"');
+            var row = await db.get('SELECT m.id,m.indexno,m.level,m.fname,m.lname,m.phone,m.email,m.username,m.dob,m.photo,m.prog_id,p.title as program FROM members m left join programs p on m.prog_id = p.id where m.indexno = "'+req.body.indexno+'"');
             console.log(row);
             req.session.user = row;
             req.session.authenticated = true;
@@ -225,19 +234,61 @@ module.exports = (function() {
         });
     });
 
+    // RESOURCES
     app.get('/resources', isAuthenticated,async(req,res) => {
-        var rows = await db.all('SELECT * FROM resources where status = 1');
+        var rows = await db.all('SELECT r.*,p.title as program FROM resources r left join programs p on p.id = r.prog_id where r.status = 1');
         res.render('dash',{
             user:req.session.user,
             link:'snippets/resources-item',
-            tab: 'news',
+            tab: 'apps',
             rows,
             msg: null
         });
     });
 
+    app.get('/resources/:prog/:level', isAuthenticated,async(req,res) => {
+        var prog_id = req.params.prog;
+        var level = req.params.level;
+        var rows = await db.all(`SELECT r.*,p.title as program FROM resources r left join programs p on p.id = r.prog_id where r.prog_id = ${prog_id} and r.level = ${level} and r.status = 1`);
+        console.log(rows);
+        res.render('dash',{
+            user:req.session.user,
+            link:'snippets/resources-item',
+            tab: 'apps',
+            rows,
+            msg: null
+        });
+    });
 
+    // MEMBERS
+    app.get('/members', isAuthenticated,async(req,res) => {
+        var rows = await db.all('SELECT m.*,p.title as program FROM members m left join programs p on p.id = m.prog_id where m.status = 1 order by prog_id desc, level asc');
+        res.render('dash',{
+            user:req.session.user,
+            link:'snippets/members-item',
+            tab: 'apps',
+            rows,
+            title: 'ALL ACTIVE GAPHS MEMEBERS',
+            msg: null
+        });
+    });
 
+    app.get('/members/:prog/:level', isAuthenticated,async(req,res) => {
+        var prog_id = req.params.prog;
+        var level = req.params.level;
+        var rows = await db.all(`SELECT m.*,p.title as program FROM members m left join programs p on p.id = m.prog_id where m.prog_id = ${prog_id} and m.level = ${level} and m.status = 1 order by prog_id desc, level asc`);
+        console.log(rows);
+        res.render('dash',{
+            user:req.session.user,
+            link:'snippets/members-item',
+            tab: 'apps',
+            rows,
+            title: 'MY CLASS MEMBERS',
+            msg: null
+        });
+    });
+
+    // PROFILE
     app.get('/profile', isAuthenticated,async(req,res) => {
         res.render('dash',{
             user:req.session.user,
@@ -252,14 +303,29 @@ module.exports = (function() {
     app.get('/manage-profile/:id', isAuthenticated,async(req,res) => {
         var id = req.params.id;
         var row = await db.get('SELECT * FROM members where id = '+id);
+        var programs = await db.all('SELECT * FROM programs');
         res.render('dash',{
             user: row,
             link:'snippets/signup-item',
             tab: 'profile',
+            programs,
             msg: null
         });
     });
 
+    // ASSOCIATION DUES
+    app.get('/dues', isAuthenticated,async(req,res) => {
+        var id = req.params.id;
+        var rows = await db.all('SELECT * FROM dues');
+        res.render('dash',{
+            user:req.session.user,
+            link:'snippets/dues-item',
+            tab: 'apps',
+            title:'GAPHS DUES PAYMENTS',
+            rows,
+            msg: null
+        });
+    });
 
     app.get('/dues/:id', isAuthenticated,async(req,res) => {
         var id = req.params.id;
@@ -267,22 +333,122 @@ module.exports = (function() {
         res.render('dash',{
             user:req.session.user,
             link:'snippets/dues-item',
-            tab: 'dues',
+            tab: 'apps',
+            title:'MY DUES PAYMENTS',
             rows,
             msg: null
         });
     });
 
 
-    app.get('/circulars', isAuthenticated,async(req,res) => {
-        var rows = await db.all('SELECT * FROM circulars where status = 1');
+    // CRUD OPERATIONS
+    
+    /* NEwS */
+    app.get('/create-news',async(req,res) => {
+        var id = req.query.id;
+        if(id){
+          var row = await db.get('SELECT * FROM articles where id = '+id);
+        }
         res.render('dash',{
-            user:req.session.user,
-            link:'snippets/circulars-item',
-            tab: 'circulars',
-            rows,
+            user: req.session.user,
+            link:'snippets/create-news',
+            tab: 'apps',
+            row,
             msg: null
         });
+    });
+
+    app.post('/create-news',async(req,res) => {
+        console.log(req.body);
+        var path = null;
+        var dest = './public/media/';
+        if(req.files){
+            var file = req.files.image;
+            path = dest+req.files.image.name;
+            file.mv(path, async(err) =>{
+                if (err) return res.status(500).send(err);
+            });
+        }
+        if(req.body.id > 0){
+            console.log(req.body);
+            var sql = path ? `UPDATE articles SET title = '${req.body.title}', content = '${req.body.content}', author = '${req.body.author}', status = ${req.body.status},image = '${path.substring(1)}' WHERE id = ${req.body.id}` : `UPDATE articles SET title = '${req.body.title}', content = '${req.body.content}', author = '${req.body.author}', status = ${req.body.status} WHERE id = ${req.body.id}`;
+            console.log(sql);
+            var ins = await db.run(sql);
+            console.log(ins);
+        }else{
+            var sql = path ? `INSERT INTO articles (title,content,author,status,image,created_at) VALUES ('${req.body.title}','${req.body.content}','${req.body.author}',${req.body.status},'${path.substring(1)}','${new Date()}')` : `INSERT INTO articles (title,content,author,status,created_at) VALUES ('${req.body.title}','${req.body.content}','${req.body.author}',${req.body.status},'${new Date()}')`;
+            var ins = await db.run(sql);
+            console.log(ins);
+        }
+        if(ins){
+           res.redirect('/news');
+        }else{
+           res.redirect('/create-news'); 
+        }
+    });
+
+
+     /* EVENTS */
+     app.get('/create-events',async(req,res) => {
+        var id = req.query.id;
+        if(id){
+          var row = await db.get('SELECT * FROM events where id = '+id);
+        }
+        res.render('dash',{
+            user: req.session.user,
+            link:'snippets/create-events',
+            tab: 'apps',
+            row,
+            msg: null
+        });
+    });
+
+    app.post('/create-events',async(req,res) => {
+        if(req.body.id > 0){
+            var sql = `UPDATE events SET title = '${req.body.title}', description = '${req.body.description}', venue = '${req.body.venue}', date = '${req.body.date}', time = '${req.body.time}' WHERE id = ${req.body.id}`;
+            var ins = await db.run(sql);
+        }else{
+            var sql = `INSERT INTO events (title,description,venue,date,time) VALUES ('${req.body.title}','${req.body.description}','${req.body.venue}','${req.body.date}','${req.body.time}')`;
+            var ins = await db.run(sql);
+        }
+        if(ins){
+           res.redirect('/events');
+        }else{
+           res.redirect('/create-events'); 
+        }
+    });
+
+
+    /* RESOURCES */
+    app.get('/create-resources',async(req,res) => {
+        var id = req.query.id;
+        if(id){
+          var row = await db.get('SELECT * FROM resources where id = '+id);
+        }
+        var programs = await db.all('SELECT * FROM programs');
+        res.render('dash',{
+            user: req.session.user,
+            link:'snippets/create-resources',
+            tab: 'apps',
+            programs,
+            row,
+            msg: null
+        });
+    });
+
+    app.post('/create-resources',async(req,res) => {
+        if(req.body.id > 0){
+            var sql = `UPDATE resources SET title = '${req.body.title}', description = '${req.body.description}', venue = '${req.body.venue}', date = '${req.body.date}', time = '${req.body.time}' WHERE id = ${req.body.id}`;
+            var ins = await db.run(sql);
+        }else{
+            var sql = `INSERT INTO resources (title,description,venue,date,time) VALUES ('${req.body.title}','${req.body.description}','${req.body.venue}','${req.body.date}','${req.body.time}')`;
+            var ins = await db.run(sql);
+        }
+        if(ins){
+           res.redirect('/resources');
+        }else{
+           res.redirect('/create-resources'); 
+        }
     });
 
 

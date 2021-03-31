@@ -3,9 +3,9 @@
     <% if(rows && rows.length > 0){
          for(var row of rows){
     %>
-    <a href="<%- row.id %>" class="item-link row">
+    <a class="item-link row">
         <div class="col-sm-3">
-            <img src="<%- row.image %>" class="img-responsive"/> 
+            <img src="<%- row.image || '/public/assets/news.png' %>" class="img-responsive"/> 
         </div>
         <div class="col-sm-9">
             <h5 class="item-title"><%- row.title %></h5>
@@ -13,15 +13,18 @@
         <div class="col-sm-12">
             <p class="item-content"><%- row.content %></p>
             <p class="item-footer">
-                    <span class="item-subfoot">PUBLISHED : <%- row.period.toUpperCase() %></span>
+                    <span class="item-subfoot">PUBLISHED : <%- row.created_at.toUpperCase().substring(0,21) %></span>
                     <span class="item-subfoot">BY : <%- row.author.toUpperCase() %></span>
+                    <% if(user && user.isAdmin){ %>
+                    <span class="item-subfoot edit-news" data-url="/create-news?id=<%- row.id %>"><b style="color:brown;cursor:pointer;">EDIT</b></span>
+                    <% }%>
             </p>
         </div>
     </a>
     <% }}else{ %>
-    <a href="<%- row.id %>" class="item-link row">
+    <a class="item-link row">
        <div class="col-sm-12">
-            <h5 class="item-title">No News Articles Published ...</h5>
+            <h5 class="item-title">NO ARTICLES PUBLISHED</h5>
         </div>
     </a>
     <% } %>

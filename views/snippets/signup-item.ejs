@@ -38,7 +38,12 @@
                                 <h5 class="list-group-item-heading">PROGRAMME</h5>
                                 <p class="list-group-item-text">
                                     <select name="prog_id" class="form-control" required>
-                                        <option value="2" >Community Health</option>
+                                        <%
+                                          if(programs.length > 0){
+                                              for(var row of programs){
+                                        %>
+                                        <option value="<%- row.id %>" <%- user && row.id == user.prog_id ? 'selected="selected"':'' %>><%- row.title.toUpperCase() %></option>
+                                        <% }} %>
                                     </select>
                                 </p><br>
                                 <h6 class="list-group-item-heading">LEVEL OR YEAR</h6>

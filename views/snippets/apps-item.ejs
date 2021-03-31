@@ -1,19 +1,28 @@
 <div class="item-cover row">
     <div class="col-sm-6">
-        <a href="" class="item-link btn btn-xs btn-warning"><b>RESOURCES</b></a>
-        <a href="" class="item-link btn btn-xs"><b>MEMBERS</b></a>
+        <a href="/resources/<%- user.prog_id %>/<%- user.level %>" class="item-link btn btn-xs btn-warning"><b>MY RESOURCES</b></a>
+        <a href="/members" class="item-link btn btn-xs btn-warning"><b>ALL MEMBERS</b></a>
     </div>
     <div class="col-sm-6">
-        <a href="" class="item-link btn btn-xs"><b>MY DUES</b></a>
-        <a href="" class="item-link btn  btn-xs btn-warning"><b>MY CLASS</b></a>
+        <a href="/dues/<%- user.indexno %>" class="item-link btn btn-xs btn-warning"><b>MY DUES</b></a>
+        <a href="/members/<%- user.prog_id %>/<%- user.level %>" class="item-link btn  btn-xs btn-warning"><b>MY CLASS</b></a>
     </div>
-
-    <div class="col-sm-12 m-t-20">
-        <a href="" class="item-link btn btn-xs"><b>MANAGE UPCOMING EVENTS</b></a>
-        <a href="" class="item-link btn btn-xs"><b>MANAGE NEWS ARTICLES</b></a>
-        <a href="" class="item-link btn btn-xs"><b>MANAGE STUDENT DUES</b></a>
-        <a href="" class="item-link btn btn-xs"><b>MANAGE EXECUTIVES</b></a>
-        <a href="" class="item-link btn btn-xs"><b>MANAGE RESOURCES</b></a>
+    
+    <% if(user && user.isAdmin){ %>
+    <div class="col-sm-6 m-t-20">
+        <a href="/dues" class="item-link btn btn-xs"><b>GAPHS DUES</b></a>
+        <a href="/members" class="item-link btn btn-xs"><b>GAPHS MEMBERS</b></a>
+        <a href="/resources" class="item-link btn btn-xs"><b>GAPHS RESOURCES</b></a>
+        <a href="/resources" class="item-link btn btn-xs"><b>GAPHS DISCUSSIONS</b></a>
+        
     </div>
+    <div class="col-sm-6 m-t-20">
+        <a href="/create-events" class="item-link btn btn-xs"><b>CREATE EVENT</b></a>
+        <a href="/create-news" class="item-link btn btn-xs"><b>CREATE ARTICLE</b></a>
+        <a href="/create-resources" class="item-link btn btn-xs"><b>CREATE RESOURCE</b></a>
+        <a href="/create-executives" class="item-link btn btn-xs"><b>CREATE EXECUTIVE</b></a>
+      
+    </div>
+    <% } %>
     
 </div>

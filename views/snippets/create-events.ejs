@@ -1,0 +1,43 @@
+<div class="item-cover">
+    <div class="card">
+        <div class="body">
+            <form action="/create-events" method="POST" enctype="application/x-www-form-urlencoded">
+                <div class="row">
+                   <div class="col-sm-12">
+                        <div class="list-group">
+                           
+                            <a href="javascript:void(0);" class="list-group-item">
+                                <h5 class="list-group-item-heading">TITLE</h5>
+                                <p class="list-group-item-text"><input type="text" name="title" value="<%- row && row.title %>" placeholder="Enter Title" class="form-control"/></p>
+                            </a>
+                            <a href="javascript:void(0);" class="list-group-item">
+                                <h5 class="list-group-item-heading">DESCRIPTION</h5>
+                                <p class="list-group-item-text"><textarea  name="description" placeholder="Enter Description" class="form-control"><%- row && row.description %></textarea></p>
+                            </a>
+                            <a href="javascript:void(0);" class="list-group-item">
+                                <h5 class="list-group-item-heading">VENUE</h5>
+                                <p class="list-group-item-text"><input type="text" name="venue" value="<%- row && row.venue %>" placeholder="Enter Author or Source" class="form-control"/></p>
+                            </a>
+                            <a href="javascript:void(0);" class="list-group-item">
+                                <h5 class="list-group-item-heading">DATE</h5>
+                                <p class="list-group-item-text"><input type="date" name="date" value="<%- row && row.date %>" placeholder="Enter Author or Source" class="form-control"/></p>
+                            </a>
+                            <a href="javascript:void(0);" class="list-group-item">
+                                <h5 class="list-group-item-heading">TIME</h5>
+                                <p class="list-group-item-text"><input type="time" name="time" value="<%- row && row.time %>" placeholder="Enter Author or Source" class="form-control"/></p>
+                            </a>
+                            
+                            <a href="javascript:void(0);" class="list-group-item">
+                                <input type="hidden" name="id" value="<%- row && row.id || 0 %>"/>
+                                <button class="btn btn-block btn-lg bg-pink waves-effect" id="changebtn" type="submit">SAVE</button>
+                            </a>
+                        </div>
+                   </div>
+
+                    <div class="col-sm-12 m-t-20 m-b--5 align-center">
+                        <small>&copy <%= new Date().getFullYear() %></small>
+                    </div>
+            </form>
+        </div>
+    </div>
+</div>

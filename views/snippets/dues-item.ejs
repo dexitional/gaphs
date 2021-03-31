@@ -1,0 +1,23 @@
+<div class="item-cover">
+    <a  class="item-link btn btn-xs btn-warning"><b><%- title %></b></a>
+    <% if(rows && rows.length > 0){
+        for(var row of rows){
+    %>
+    <a class="item-link row">
+        <div class="col-sm-5">
+            <h5 class="list-group-item-heading"><%- 'GHC '+row.amount %></h5>
+            <p class="list-group-item-text"><small>PAID ON: <b><%- row.transact_date %></b> </small></p>
+        </div>
+        <div class="col-sm-7">
+            <h5 class="list-group-item-heading"><%- row.title.toUpperCase() %></h5>
+            <p class="list-group-item-text"><small><b><%- row.indexno.toUpperCase()+' / YEAR '+row.level %></b> </small></p>
+        </div>
+    </a>
+    <% }}else{ %>
+    <a class="item-link row">
+    <div class="col-sm-12">
+            <h5 class="item-title">NO DUES PAYMENTS</h5>
+        </div>
+    </a>
+    <% } %>
+</div>
