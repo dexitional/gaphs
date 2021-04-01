@@ -101,7 +101,7 @@ module.exports = (function() {
 
 
     app.get('/executives',async(req,res) => {
-        var rows = await db.all('SELECT * FROM executives where active = 1');
+        var rows = await db.all('SELECT e.*,p.title as program FROM executives e left join programs p on p.id = e.prog_id where e.active = 1');
         res.render('dash',{
             user: req.session.user,
             link:'snippets/executives-item',
@@ -437,12 +437,24 @@ module.exports = (function() {
     });
 
     app.post('/create-resources',async(req,res) => {
+        console.log(req.body);
+        var path = null;
+        var dest = './public/media/';
+        if(req.files){
+            var file = req.files.pdf;
+            path = dest+req.files.pdf.name;
+            file.mv(path, async(err) =>{
+                if (err) return res.status(500).send(err);
+            });
+        }
         if(req.body.id > 0){
-            var sql = `UPDATE resources SET title = '${req.body.title}', description = '${req.body.description}', venue = '${req.body.venue}', date = '${req.body.date}', time = '${req.body.time}' WHERE id = ${req.body.id}`;
+            var sql = path ? `UPDATE resources SET title = '${req.body.title}',prog_id = ${req.body.prog_id}, level = ${req.body.level}, status = ${req.body.status},path = '${path.substring(1)}' WHERE id = ${req.body.id}` : `UPDATE resources SET title = '${req.body.title}',prog_id = ${req.body.prog_id}, level = ${req.body.level}, status = ${req.body.status} WHERE id = ${req.body.id}`;
             var ins = await db.run(sql);
+            console.log(ins);
         }else{
-            var sql = `INSERT INTO resources (title,description,venue,date,time) VALUES ('${req.body.title}','${req.body.description}','${req.body.venue}','${req.body.date}','${req.body.time}')`;
+            var sql = path ? `INSERT INTO resources (title,level,prog_id,status,path) VALUES ('${req.body.title}',${req.body.level},${req.body.prog_id},${req.body.status},'${path.substring(1)}')` : `INSERT INTO resources (title,level,prog_id,status) VALUES ('${req.body.title}','${req.body.level}',${req.body.prog_id},${req.body.status})`;
             var ins = await db.run(sql);
+            console.log(ins);
         }
         if(ins){
            res.redirect('/resources');
@@ -450,6 +462,55 @@ module.exports = (function() {
            res.redirect('/create-resources'); 
         }
     });
+
+
+
+    /* EXECUTIVES */
+    app.get('/create-executives',async(req,res) => {
+        var id = req.query.id;
+        if(id){
+          var row = await db.get('SELECT * FROM executives where id = '+id);
+        }
+        var programs = await db.all('SELECT * FROM programs');
+        res.render('dash',{
+            user: req.session.user,
+            link:'snippets/create-executives',
+            tab: 'apps',
+            programs,
+            row,
+            msg: null
+        });
+    });
+
+    app.post('/create-executives',async(req,res) => {
+        console.log(req.body);
+        var path = null;
+        var dest = './public/photos/';
+        if(req.files){
+            var file = req.files.photo;
+            path = dest+req.files.photo.name;
+            file.mv(path, async(err) =>{
+                if (err) return res.status(500).send(err);
+            });
+        }
+        if(req.body.id > 0){
+            var sql = path ? `UPDATE executives SET name = '${req.body.name}',prog_id = ${req.body.prog_id}, position = '${req.body.position}', active = ${req.body.active},path = '${path.substring(1)}' WHERE id = ${req.body.id}` : `UPDATE executives SET name = '${req.body.name}',prog_id = ${req.body.prog_id}, position = '${req.body.level}', active = ${req.body.active} WHERE id = ${req.body.id}`;
+            var ins = await db.run(sql);
+            console.log(ins);
+        }else{
+            var sql = path ? `INSERT INTO executives (name,position,prog_id,active,path) VALUES ('${req.body.name}','${req.body.position}',${req.body.prog_id},${req.body.active},'${path.substring(1)}')` : `INSERT INTO executives (name,position,prog_id,active) VALUES ('${req.body.name}','${req.body.position}',${req.body.prog_id},${req.body.active})`;
+            var ins = await db.run(sql);
+            console.log(ins);
+        }
+        if(ins){
+           res.redirect('/executives');
+        }else{
+           res.redirect('/create-executives'); 
+        }
+    });
+
+
+    //
 
 
     /* Photo  */

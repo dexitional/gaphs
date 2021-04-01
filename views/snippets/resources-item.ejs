@@ -3,18 +3,20 @@
     <% if(rows && rows.length > 0){
         for(var row of rows){
     %>
-    <a href="<%- row.path %>" class="item-link row">
+    <a class="item-link row">
+        <span class="a-link" data-url="<%- row.path %>">
         <div class="col-sm-2">
             <img src="/public/assets/dwload.png" height="50px"/> 
         </div>
         <div class="col-sm-10">
             <h5 class="item-title"><%- row.title.toUpperCase() %></h5>
         </div>
+        </span>
         <div class="col-sm-12">
             <p class="item-footer">
                 <span class="item-subfoot">PROGRAM : <%- row.program.toUpperCase() %> / YEAR : <%- row.level %></span>
                 <% if(user && user.isAdmin){ %>
-                <span class="item-subfoot edit-resources" data-url="/create-resources?id=<%- row.id %>"><b style="color:brown;cursor:pointer;">EDIT</b></span>
+                <span class="item-subfoot edit-item" data-url="/create-resources?id=<%- row.id %>"><b style="color:brown;cursor:pointer;">EDIT</b></span>
                 <% }%>
             </p>
         </div>
@@ -22,7 +24,7 @@
     <% }}else{ %>
         <a class="item-link row">
            <div class="col-sm-12">
-                <h5 class="item-title">No Resource published ...</h5>
+                <h5 class="item-title">NO RESOURCES FOUND</h5>
             </div>
         </a>
         <% } %>

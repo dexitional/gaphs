@@ -4,19 +4,21 @@
          for(var row of rows){
     %>
     <a class="item-link row">
+        <span class="a-link" data-url="/news/<%- row.id %>">
         <div class="col-sm-3">
             <img src="<%- row.image || '/public/assets/news.png' %>" class="img-responsive"/> 
         </div>
         <div class="col-sm-9">
             <h5 class="item-title"><%- row.title %></h5>
         </div>
+        </span>
         <div class="col-sm-12">
             <p class="item-content"><%- row.content %></p>
             <p class="item-footer">
                     <span class="item-subfoot">PUBLISHED : <%- row.created_at.toUpperCase().substring(0,21) %></span>
                     <span class="item-subfoot">BY : <%- row.author.toUpperCase() %></span>
                     <% if(user && user.isAdmin){ %>
-                    <span class="item-subfoot edit-news" data-url="/create-news?id=<%- row.id %>"><b style="color:brown;cursor:pointer;">EDIT</b></span>
+                    <span class="item-subfoot edit-item" data-url="/create-news?id=<%- row.id %>"><b style="color:brown;cursor:pointer;">EDIT</b></span>
                     <% }%>
             </p>
         </div>

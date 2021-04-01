@@ -16,7 +16,7 @@
                     <span class="item-subfoot">DATE : <%- row.date.toUpperCase() %></span>
                     <span class="item-subfoot">TIME : <%- row.time.toUpperCase() %> GMT</span>
                     <% if(user && user.isAdmin){ %>
-                    <span class="item-subfoot edit-events" data-url="/create-events?id=<%- row.id %>"><b style="color:brown;cursor:pointer;">EDIT</b></span>
+                    <span class="item-subfoot edit-item" data-url="/create-events?id=<%- row.id %>"><b style="color:brown;cursor:pointer;">EDIT</b></span>
                     <% } %>
             </p>
         </div>

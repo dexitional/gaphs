@@ -1,0 +1,63 @@
+<div class="item-cover">
+    <div class="card">
+        <div class="body">
+            <form action="/create-executives" method="POST" enctype="multipart/form-data">
+                <div class="row">
+                   <div class="col-sm-12">
+                        <div class="list-group">
+                            <% if(row){ %>
+                                <a href="javascript:void(0);" class="list-group-item">
+                                    <img src="<%- row ? row.path : '/public/assets/profile_img.png' %>" width="150px;"/>
+                                </a>
+                            <% } %>
+                                <a href="javascript:void(0);" class="list-group-item">
+                                    <h5 class="list-group-item-heading">UPLOAD PHOTO</h5>
+                                    <p class="list-group-item-text">
+                                    <input type="file" name="photo" class="form-control"/>
+                                    </p>
+                                    <small style="font-size:10px;font-weight:bolder;line-height:10px;"> Image Size: <em>( 500px X 500px )</em></small>
+                                </a>
+                                <a href="javascript:void(0);" class="list-group-item">
+                                <h5 class="list-group-item-heading">NAME</h5>
+                                <p class="list-group-item-text"><input type="text" name="name" value="<%- row && row.name %>" placeholder="Enter Full Name" class="form-control"/></p>
+                            </a>
+                            <a href="javascript:void(0);" class="list-group-item">
+                                <h5 class="list-group-item-heading">POSITION</h5>
+                                <p class="list-group-item-text"><input type="text" name="position" value="<%- row && row.position %>" placeholder="Enter Position" class="form-control"/></p>
+                            </a>
+                            <a href="javascript:void(0);" class="list-group-item">
+                                <h5 class="list-group-item-heading">PROGRAM</h5>
+                                <p class="list-group-item-text">
+                                    <select name="prog_id" class="form-control" required>
+                                        <%
+                                          if(programs.length > 0){
+                                              for(var rec of programs){
+                                        %>
+                                        <option value="<%- rec.id %>" <%- row && rec.id == row.prog_id ? 'selected="selected"':'' %>><%- rec.title.toUpperCase() %></option>
+                                        <% }} %>
+                                    </select>
+                                </p>
+                            </a>
+                            <a href="javascript:void(0);" class="list-group-item">
+                                <h5 class="list-group-item-heading">VISIBILITY</h5>
+                                <p class="list-group-item-text">
+                                    <select name="active" class="form-control" required>
+                                       <option value="1" <%- row && row.active == '1' ? 'selected="selected"':'' %>>ENABLED</option>
+                                       <option value="0" <%- row && row.active == '0' ? 'selected="selected"':'' %>>DISABLED</option>
+                                    </select>
+                                </p>
+                            </a>
+                            <a href="javascript:void(0);" class="list-group-item">
+                                <input type="hidden" name="id" value="<%- row && row.id || 0 %>"/>
+                                <button class="btn btn-block btn-lg bg-pink waves-effect" id="changebtn" type="submit">SAVE</button>
+                            </a>
+                        </div>
+                   </div>
+
+                    <div class="col-sm-12 m-t-20 m-b--5 align-center">
+                        <small>&copy <%= new Date().getFullYear() %></small>
+                    </div>
+            </form>
+        </div>
+    </div>
+</div>

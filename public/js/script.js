@@ -47,14 +47,15 @@ $(document).ready(function(){
         onScroll();
     });
 
-    $('.edit-news').click(function(){
+    // Initialize CSS
+    $('.a-link').css("cursor","pointer");
+    $('.edit-item,.a-link').click(function(){
         location.href = $(this).data('url');
+        alert($(this).data('url'));
     });
 
-    $('.edit-resources').click(function(){
-        location.href = $(this).data('url');
-    });
-
+   
+  /*
     $('.edit-events').click(function(){
         location.href = $(this).data('url');
     });
@@ -70,5 +71,5 @@ $(document).ready(function(){
     $('.edit-dues').click(function(){
         location.href = $(this).data('url');
     });
-
+*/
 });
