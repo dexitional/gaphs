@@ -7,7 +7,7 @@
                    <div class="col-sm-6">
                         <div class="list-group">
                             <a href="javascript:void(0);" class="list-group-item">
-                                <img src="<%- user ? '.'+user.photo : '/public/assets/profile_img.png' %>" width="150px;"/>
+                                <img src="<%- user ? user.photo : '/public/assets/profile_img.png' %>" width="150px;"/>
                             </a>
                             <a href="javascript:void(0);" class="list-group-item">
                                 <h5 class="list-group-item-heading">UPLOAD PHOTO</h5>
@@ -39,10 +39,10 @@
                                 <p class="list-group-item-text">
                                     <select name="prog_id" class="form-control" required>
                                         <%
-                                          if(programs.length > 0){
+                                          if(programs && programs.length > 0){
                                               for(var row of programs){
                                         %>
-                                        <option value="<%- row.id %>" <%- user && row.id == user.prog_id ? 'selected="selected"':'' %>><%- row.title.toUpperCase() %></option>
+                                        <option value="<%- row.id %>" <%- user && row.id == user.prog_id._id ? 'selected="selected"':'' %>><%- row.title.toUpperCase() %></option>
                                         <% }} %>
                                     </select>
                                 </p><br>
@@ -75,7 +75,7 @@
                     </div>
                     <div class="col-sm-12 m-b--5 align-center">
                         <a href="javascript:void(0);" class="list-group-item">
-                            <input type="hidden" name="id" value="<%- user && user.id || 0 %>"/>
+                            <input type="hidden" name="id" value="<%- user && user._id || 0 %>"/>
                             <button class="btn btn-block btn-lg bg-pink waves-effect" id="changebtn" type="submit"><%- user ? 'UPDATE PROFILE' : 'SIGN UP' %></button>
                         </a>
                     </div>

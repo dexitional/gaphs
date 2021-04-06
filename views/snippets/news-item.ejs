@@ -15,7 +15,7 @@
         <div class="col-sm-12">
             <p class="item-content"><%- row.content %></p>
             <p class="item-footer">
-                    <span class="item-subfoot">PUBLISHED : <%- row.created_at.toUpperCase().substring(0,21) %></span>
+                    <span class="item-subfoot">PUBLISHED : <%- row.created_at.toString().toUpperCase().substring(0,15) %></span>
                     <span class="item-subfoot">BY : <%- row.author.toUpperCase() %></span>
                     <% if(user && user.isAdmin){ %>
                     <span class="item-subfoot edit-item" data-url="/create-news?id=<%- row.id %>"><b style="color:brown;cursor:pointer;">EDIT</b></span>

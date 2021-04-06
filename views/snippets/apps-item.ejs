@@ -1,11 +1,11 @@
 <div class="item-cover row">
     <div class="col-sm-6">
-        <a href="/resources/<%- user.prog_id %>/<%- user.level %>" class="item-link btn btn-xs btn-warning"><b>MY RESOURCES</b></a>
+        <a href="/resources/<%- user.prog_id._id %>/<%- user.level %>" class="item-link btn btn-xs btn-warning"><b>MY RESOURCES</b></a>
         <a href="/members" class="item-link btn btn-xs btn-warning"><b>ALL MEMBERS</b></a>
     </div>
     <div class="col-sm-6">
         <a href="/dues/<%- user.indexno %>" class="item-link btn btn-xs btn-warning"><b>MY DUES</b></a>
-        <a href="/members/<%- user.prog_id %>/<%- user.level %>" class="item-link btn  btn-xs btn-warning"><b>MY CLASS</b></a>
+        <a href="/members/<%- user.prog_id._id %>/<%- user.level %>" class="item-link btn  btn-xs btn-warning"><b>MY CLASS</b></a>
     </div>
     
     <% if(user && user.isAdmin){ %>

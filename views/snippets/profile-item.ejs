@@ -4,7 +4,7 @@
                 <div class="row">
                    <div class="col-sm-6">
                         <div class="list-group">
-                            <a href="/manage-profile/<%- user.id %>" class="list-group-item">
+                            <a href="/manage-profile/<%- user._id %>" class="list-group-item">
                                <button class="btn btn-block btn-xs btn-warning"><b>MANAGE PROFILE</b></button>
                             </a>
                             <a href="javascript:void(0);" class="list-group-item">
@@ -30,7 +30,7 @@
                         <div class="list-group">
                             <a href="javascript:void(0);" class="list-group-item">
                                 <h5 class="list-group-item-heading">PROGRAMME</h5>
-                                <p class="list-group-item-text"><small><%- row.program.toUpperCase() %></small></p><br>
+                                <p class="list-group-item-text"><small><%- row.prog_id.title.toUpperCase() %></small></p><br>
                                 <h6 class="list-group-item-heading">LEVEL OR YEAR</h6>
                                 <p class="list-group-item-text"><%- row.level %></p>
                             </a>

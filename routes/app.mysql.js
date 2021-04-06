@@ -24,7 +24,20 @@ module.exports = (function() {
         pass: 'gloria007'
       }
     });
-    
+
+    //Import the mongoose module
+    var mongoose = require('mongoose');
+
+    //Set up default mongoose connection
+    var mongoDB = 'mongodb://127.0.0.1/gaphs';
+    mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true});
+
+    //Get the default connection
+    var con = mongoose.connection;
+
+    //Bind connection to error event (to get notification of connection errors)
+    con.on('error', console.error.bind(console, 'MongoDB connection error:'));
+        
     // Check Authentication Middleware
     var isAuthenticated = (req, res, next) => {
         if (req.session.authenticated)
