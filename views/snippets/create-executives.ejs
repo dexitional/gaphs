@@ -33,7 +33,7 @@
                                           if(programs.length > 0){
                                               for(var rec of programs){
                                         %>
-                                        <option value="<%- rec.id %>" <%- row && rec.id == row.prog_id ? 'selected="selected"':'' %>><%- rec.title.toUpperCase() %></option>
+                                        <option value="<%- rec.id %>" <%- row && rec.id == row.prog_id._id ? 'selected="selected"':'' %>><%- rec.title.toUpperCase() %></option>
                                         <% }} %>
                                     </select>
                                 </p>
