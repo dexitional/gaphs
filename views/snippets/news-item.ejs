@@ -5,15 +5,15 @@
     %>
     <a class="item-link row">
         <span class="a-link" data-url="/news/<%- row.id %>">
-        <div class="col-sm-3">
-            <img src="<%- row.image || '/public/assets/news.png' %>" class="img-responsive"/> 
-        </div>
-        <div class="col-sm-9">
-            <h5 class="item-title"><%- row.title %></h5>
-        </div>
+            <div class="col-sm-3">
+                <img src="<%- row.image || '/public/assets/news.png' %>" class="img-responsive"/> 
+            </div>
+            <div class="col-sm-9">
+                <h5 class="item-title"><%- row.title.toUpperCase() %></h5>
+            </div>
         </span>
-        <div class="col-sm-12">
-            <p class="item-content"><%- row.content %></p>
+        <div class="col-sm-12 m-t-10">
+            <p class="item-content" style="font-weight:600;"><%- row.content %></p>
             <p class="item-footer">
                     <span class="item-subfoot">PUBLISHED : <%- row.created_at.toString().toUpperCase().substring(0,15) %></span>
                     <span class="item-subfoot">BY : <%- row.author.toUpperCase() %></span>
