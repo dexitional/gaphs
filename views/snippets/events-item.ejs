@@ -13,7 +13,7 @@
             <p class="item-content hidden"><%- row.description %></p>
             <p class="item-footer">
                     <span class="item-subfoot">VENUE : <%- row.venue.toUpperCase() %></span>
-                    <span class="item-subfoot">DATE : <%- row.date != null ? row.date.toUpperCase() : 'NONE' %></span>
+                    <span class="item-subfoot">DATE : <%- row.date %></span>
                     <span class="item-subfoot">TIME : <%- row.time.toUpperCase() %> GMT</span>
                     <% if(user && user.isAdmin){ %>
                     <span class="item-subfoot edit-item" data-url="/create-events?id=<%- row.id %>"><b style="color:brown;cursor:pointer;">EDIT</b></span>
