@@ -49,10 +49,11 @@ $(document).ready(function(){
 
     // Initialize CSS
     $('.a-link').css("cursor","pointer");
-    $('.edit-item,.a-link').click(function(){
+    $('.view').css({"cursor":"pointer","font-style":"italic","font-weight":"600"});
+    $('.edit-item,.a-link,.view').click(function(){
         location.href = $(this).data('url');
-        alert($(this).data('url'));
     });
+
 
    
   /*
