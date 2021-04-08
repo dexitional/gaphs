@@ -108,7 +108,7 @@ module.exports = (function() {
     /* Public Routes */
 
     app.get('/news',async(req,res) => {
-        var rows = await Article.find().exec();
+        var rows = await Article.find().sort({'_id': -1}).exec();
         res.render('dash',{
             user: req.session.user,
             link:'snippets/news-item',
@@ -119,7 +119,7 @@ module.exports = (function() {
     });
 
     app.get('/events',async(req,res) => {
-        var rows = await Event.find().exec();
+        var rows = await Event.find().sort({'_id': -1}).exec();
         res.render('dash',{
             user: req.session.user,
             link:'snippets/events-item',

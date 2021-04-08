@@ -10,6 +10,7 @@ module.exports = mongoose.model('Executive', Schema({
   },
   name: String,
   position: String,
+  phone: String,
   path: String,
   active: { type: Number, default: 1}
 }));

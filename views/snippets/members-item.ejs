@@ -11,6 +11,14 @@
             <h5 class="list-group-item-heading"><%- row.fname.toUpperCase()+' '+row.lname.toUpperCase() %></h5>
             <p class="list-group-item-text"><small><%- row.prog_id.title.toUpperCase()+'  - YEAR '+row.level %> </small></p>
         </div>
+        <div class="col-sm-12 m-t-10">
+            <p class="item-footer">
+                <% if(user && user.isAdmin){ %>
+                <span class="item-subfoot edit-item" data-url="/create-members?id=<%- row.id %>"><b style="color:brown;cursor:pointer;">MANAGE MEMBER </b></span>
+                <span class="item-subfoot edit-item" data-url="/delete-member?id=<%- row.id %>"><b style="color:brown;cursor:pointer;">DELETE MEMBER</b></span>
+                <% } %>
+            </p>
+        </div>
     </a>
     <% }}else{ %>
     <a class="item-link row">
