@@ -54,6 +54,14 @@ $(document).ready(function(){
         location.href = $(this).data('url');
     });
 
+    $('.del-item').click(function(){
+        if(confirm("Delete record ?")){
+            location.href = $(this).data('url');
+        } return false;
+    });
+
+
+
 
    
   /*

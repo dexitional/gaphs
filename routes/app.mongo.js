@@ -204,12 +204,19 @@ module.exports = (function() {
            
         }
         if(ins){
-            var row = await Member.findOne({indexno:req.body.indexno}).populate('prog_id').lean();
-            row.dob = moment(row.dob).format('YYYY-MM-DD');
-            req.session.user = row;
-            req.session.authenticated = true;
-            req.session.save();
-            res.redirect('/profile');
+            if(req.session.user.isAdmin && req.session.user.indexno == req.body.indexno){
+                var row = await Member.findOne({indexno:req.body.indexno}).populate('prog_id').lean();
+                row.dob = moment(row.dob).format('YYYY-MM-DD');
+                req.session.user = row;
+                req.session.authenticated = true;
+                req.session.save();
+                res.redirect('/profile');
+            }else if(req.session.user.isAdmin){
+                res.redirect('/members');
+            }else{
+                res.redirect('/apps');
+            }
+            
         }else{
             var programs = await Program.find().exec();
             res.render('dash',{
@@ -293,7 +300,7 @@ module.exports = (function() {
     app.get('/delete-member/:id', isAuthenticated,async(req,res) => {
         var id = req.params.id;
         try{
-          var row = await Program.findByIdAndDelete({_id: id}).exec();
+          var row = await Member.deleteOne({_id: id}).exec();
         }catch(e){
           console.log(e);
         }
@@ -315,13 +322,15 @@ module.exports = (function() {
     app.get('/manage-profile/:id', isAuthenticated,async(req,res) => {
         var id = req.params.id;
         try{
+          var row = await Member.findOne({_id:id}).populate('prog_id').lean();
+          row.dob = moment(row.dob).format('YYYY-MM-DD');
           var programs = await Program.find().exec();
         }catch(e){
           console.log(e);
         }
         console.log(req.session.user);
         res.render('dash',{
-            user: req.session.user,
+            user: row,
             link:'snippets/signup-item',
             tab: 'profile',
             programs,
@@ -526,6 +535,38 @@ module.exports = (function() {
            res.redirect('/executives');
         }else{
            res.redirect('/create-executives'); 
+        }
+    });
+
+
+    /* DUES */
+    app.get('/create-dues',async(req,res) => {
+        var id = req.query.id;
+        if(id){
+            var row = await Due.findOne({_id:id}).exec();
+        }
+        res.render('dash',{
+            user: req.session.user,
+            link:'snippets/create-dues',
+            tab: 'apps',
+            row,
+            msg: null
+        });
+    });
+
+    app.post('/create-dues',async(req,res) => {
+        if(req.body.id == 0){
+            req.body._id = mongoose.Types.ObjectId();
+            var ins = await Due.create(req.body);
+        }else{
+            try{
+               var ins = await Due.findByIdAndUpdate({_id:req.body.id},req.body);
+            }catch(e) { console.log(e);}
+        }
+        if(ins){
+           res.redirect('/dues');
+        }else{
+           res.redirect('/create-dues'); 
         }
     });
 

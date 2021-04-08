@@ -1,0 +1,42 @@
+<div class="item-cover">
+    <div class="card">
+        <div class="body">
+            <form action="/create-dues" method="POST" enctype="application/x-www-form-urlencoded">
+                <div class="row">
+                   <div class="col-sm-12">
+                        <div class="list-group">
+                            <a href="javascript:void(0);" class="list-group-item">
+                                <h5 class="list-group-item-heading">PAYMENT DESCRIPTION</h5>
+                                <p class="list-group-item-text"><input type="text" name="title" value="<%- row && row.title %>" placeholder="Enter Payment Description" class="form-control"/></p>
+                            </a>
+                            <a href="javascript:void(0);" class="list-group-item">
+                                <h5 class="list-group-item-heading">INDEX NUMBER OF MEMBER</h5>
+                                <p class="list-group-item-text"><input type="text" name="indexno" value="<%- row && row.indexno %>" placeholder="Enter Index Number" class="form-control"/></p>
+                            </a>
+                            <a href="javascript:void(0);" class="list-group-item">
+                                <h5 class="list-group-item-heading">LEVEL OF MEMBER</h5>
+                                <p class="list-group-item-text"><input type="number" name="level" value="<%- row && row.level %>" placeholder="Enter Level" class="form-control"/></p>
+                            </a>
+                            <a href="javascript:void(0);" class="list-group-item">
+                                <h5 class="list-group-item-heading">TRANSACTION DATE</h5>
+                                <p class="list-group-item-text"><input type="date" name="transact_date" value="<%- row && row.transact_date %>" placeholder="Enter Trasanction Date" class="form-control"/></p>
+                            </a>
+                            <a href="javascript:void(0);" class="list-group-item">
+                                <h5 class="list-group-item-heading">AMOUNT PAID</h5>
+                                <p class="list-group-item-text"><input type="number" step="0.01" name="amount" value="<%- row && row.amount %>" placeholder="Enter Amount Paid" class="form-control"/></p>
+                            </a>
+                            
+                            <a href="javascript:void(0);" class="list-group-item">
+                                <input type="hidden" name="id" value="<%- row && row.id || 0 %>"/>
+                                <button class="btn btn-block btn-lg bg-pink waves-effect" id="changebtn" type="submit">SAVE</button>
+                            </a>
+                        </div>
+                   </div>
+
+                    <div class="col-sm-12 m-t-20 m-b--5 align-center">
+                        <small>&copy <%= new Date().getFullYear() %></small>
+                    </div>
+            </form>
+        </div>
+    </div>
+</div>

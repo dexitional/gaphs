@@ -6,7 +6,7 @@
     <a class="item-link row">
         <div class="col-sm-5">
             <h5 class="list-group-item-heading"><%- 'GHC '+row.amount %></h5>
-            <p class="list-group-item-text"><small>PAID ON: <b><%- row.transact_date %></b> </small></p>
+            <p class="list-group-item-text"><small>PAID ON: <b><%- row.transact_date != null ? row.transact_date.toString().substring(0,15).toUpperCase():'NONE' %></b> </small></p>
         </div>
         <div class="col-sm-7">
             <h5 class="list-group-item-heading"><%- row.title.toUpperCase() %></h5>
