@@ -290,6 +290,16 @@ module.exports = (function() {
         });
     });
 
+    app.get('/delete-member/:id', isAuthenticated,async(req,res) => {
+        var id = req.params.id;
+        try{
+          var row = await Program.findByIdAndDelete({_id: id}).exec();
+        }catch(e){
+          console.log(e);
+        }
+        res.redirect('/members');
+    });
+
     // PROFILE
     app.get('/profile', isAuthenticated,async(req,res) => {
         res.render('dash',{

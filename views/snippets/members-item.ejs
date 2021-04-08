@@ -14,8 +14,8 @@
         <div class="col-sm-12 m-t-10">
             <p class="item-footer">
                 <% if(user && user.isAdmin){ %>
-                <span class="item-subfoot edit-item" data-url="/create-members?id=<%- row.id %>"><b style="color:brown;cursor:pointer;">MANAGE MEMBER </b></span>
-                <span class="item-subfoot edit-item" data-url="/delete-member?id=<%- row.id %>"><b style="color:brown;cursor:pointer;">DELETE MEMBER</b></span>
+                <span class="item-subfoot edit-item" data-url="/manage-profile/<%- row.id %>"><b style="color:brown;cursor:pointer;">MANAGE MEMBER </b></span>
+                <span class="item-subfoot del-item" data-url="/delete-member?id=<%- row.id %>"><b style="color:brown;cursor:pointer;">DELETE MEMBER</b></span>
                 <% } %>
             </p>
         </div>
