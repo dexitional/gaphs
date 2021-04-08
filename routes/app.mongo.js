@@ -269,6 +269,9 @@ module.exports = (function() {
         });
     });
 
+    
+
+
     // MEMBERS
     app.get('/members', isAuthenticated,async(req,res) => {
         var rows = await Member.find({status:1}).populate('prog_id').exec();
@@ -416,6 +419,17 @@ module.exports = (function() {
         }
     });
 
+    app.get('/delete-news/:id', isAuthenticated,async(req,res) => {
+        var id = req.params.id;
+        try{
+          var row = await Article.deleteOne({_id: id}).exec();
+        }catch(e){
+          console.log(e);
+        }
+        res.redirect('/news');
+    });
+
+
 
      /* EVENTS */
      app.get('/create-events',async(req,res) => {
@@ -447,6 +461,17 @@ module.exports = (function() {
            res.redirect('/create-events'); 
         }
     });
+
+    app.get('/delete-events/:id', isAuthenticated,async(req,res) => {
+        var id = req.params.id;
+        try{
+          var row = await Event.deleteOne({_id: id}).exec();
+        }catch(e){
+          console.log(e);
+        }
+        res.redirect('/events');
+    });
+
 
 
     /* RESOURCES */
@@ -490,6 +515,16 @@ module.exports = (function() {
         }else{
            res.redirect('/create-resources'); 
         }
+    });
+
+    app.get('/delete-resources/:id', isAuthenticated,async(req,res) => {
+        var id = req.params.id;
+        try{
+          var row = await Resource.deleteOne({_id: id}).exec();
+        }catch(e){
+          console.log(e);
+        }
+        res.redirect('/resources');
     });
 
 

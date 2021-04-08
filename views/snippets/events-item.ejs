@@ -17,6 +17,7 @@
                     <span class="item-subfoot">TIME : <%- row.time.toUpperCase() %> GMT</span>
                     <% if(user && user.isAdmin){ %>
                     <span class="item-subfoot edit-item" data-url="/create-events?id=<%- row.id %>"><b style="color:brown;cursor:pointer;">EDIT</b></span>
+                    <span class="item-subfoot del-item" data-url="/delete-events/<%- row.id %>"><b style="color:brown;cursor:pointer;">DEL</b></span>
                     <% } %>
             </p>
         </div>

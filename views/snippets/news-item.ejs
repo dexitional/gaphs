@@ -19,6 +19,7 @@
                     <span class="item-subfoot">BY : <%- row.author.toUpperCase() %></span>
                     <% if(user && user.isAdmin){ %>
                     <span class="item-subfoot edit-item" data-url="/create-news?id=<%- row.id %>"><b style="color:brown;cursor:pointer;">EDIT</b></span>
+                    <span class="item-subfoot del-item" data-url="/delete-news/<%- row.id %>"><b style="color:brown;cursor:pointer;">DEL</b></span>
                     <% }%>
             </p>
         </div>
