@@ -6,8 +6,6 @@ module.exports = (function() {
     //var sms = require('./sms');
     // Moment
     var moment = require('moment');
-    // Nodemailler
-    var nodemailer = require('nodemailer');
     var email = require('../config/email.json');
     var users = require('../config/users.json');
     var studjson = require('../config/student.json');
