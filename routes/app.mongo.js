@@ -413,7 +413,7 @@ module.exports = (function() {
 
             // SEND E-MAIL 
             var mems = await Member.find().lean();
-            var message = {title: "GAPHS PUBLISHES NEW ARTICLE", content: "Gaphs publishes an article titled : <b>"+req.body.title+"<b>. <a href='https://gaphs.cohk.live/news-detail/"+req.body.id+"'>Click here to read the article.</a> "}
+            var message = {title: "GAPHS PUBLISHES NEW ARTICLE", content: "Gaphs publishes an article titled : <b>"+req.body.title+"<b>. <a href='https://gaphs.cohk.live/news-detail/"+req.body._id+"'>Click here to read the article.</a> "}
             if(mems && mems.length > 0){
                 var emails = "";
                 var i = 0;
