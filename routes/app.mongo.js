@@ -437,7 +437,8 @@ module.exports = (function() {
                     if(mem.email) emails += mem.email+(i == mems.length ? "," : "");
                     i = i+1;
                 }
-                mailer(emails,message.title,message.content);
+                console.log(emails);
+                //mailer(emails,message.title,message.content);
             }
         }
         if(ins){
