@@ -429,6 +429,14 @@ module.exports = (function() {
             try{
                var ins = await Article.findByIdAndUpdate({_id:req.body.id},req.body);
             }catch(e) { console.log(e);}
+             // SEND E-MAIL 
+             var mems = await Member.find().lean();
+             var message = {title: "GAPHS PUBLISHES NEW ARTICLE", content: "Gaphs publishes an article titled : <b>"+req.body.title+"<b>. <a href='https://gaphs.cohk.live/news-detail/"+req.body.id+"'>Click here to read the article.</a> "}
+             if(mems && mems.length > 0){
+                 for(var mem of mems){
+                     mailer(mem.email,message.title,message.content);
+                 }
+             }
         }
         if(ins){
            res.redirect('/news');
