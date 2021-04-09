@@ -118,6 +118,22 @@ module.exports = (function() {
         });
     });
 
+    app.get('/news-detail/:id',async(req,res) => {
+        var id = req.params.id;
+        try{
+            var row = await Article.findOne({_id:id}).exec();
+        }catch(e){
+            console.log(e);
+        }
+        res.render('dash',{
+            user:req.session.user,
+            link:'snippets/news-detail',
+            tab: 'news',
+            row,
+            msg: null
+        });
+    });
+
     app.get('/events',async(req,res) => {
         var rows = await Event.find().sort({'_id': -1}).exec();
         res.render('dash',{
@@ -331,7 +347,6 @@ module.exports = (function() {
         }catch(e){
           console.log(e);
         }
-        console.log(req.session.user);
         res.render('dash',{
             user: row,
             link:'snippets/signup-item',

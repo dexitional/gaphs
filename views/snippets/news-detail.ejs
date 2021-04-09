@@ -1,0 +1,28 @@
+<div class="item-cover">
+
+    <% if(row){ %>
+    <a class="item-link row">
+        <span>
+            <div class="col-sm-12">
+                <img src="<%- row.image || '/public/assets/news.png' %>" class="img-responsive"/> 
+            </div>
+            <div class="col-sm-12">
+                <h5 class="item-title"><%- row.title.toUpperCase() %></h5>
+            </div>
+        </span>
+        <div class="col-sm-12 m-t-10">
+            <p class="item-content"><%- row.content %></p>
+            <p class="item-footer">
+                    <span class="item-subfoot">PUBLISHED : <%- row.created_at.toString().toUpperCase().substring(0,15) %></span>
+                    <span class="item-subfoot">BY : <%- row.author.toUpperCase() %></span>
+            </p>
+        </div>
+    </a>
+    <% }else{ %>
+    <a class="item-link row">
+       <div class="col-sm-12">
+            <h5 class="item-title">NO ARTICLE PUBLISHED</h5>
+        </div>
+    </a>
+    <% } %>
+</div>

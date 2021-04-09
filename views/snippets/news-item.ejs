@@ -4,7 +4,7 @@
          for(var row of rows){
     %>
     <a class="item-link row">
-        <span class="a-link" data-url="/news/<%- row.id %>">
+        <span class="a-link" data-url="/news-detail/<%- row.id %>">
             <div class="col-sm-3">
                 <img src="<%- row.image || '/public/assets/news.png' %>" class="img-responsive"/> 
             </div>
@@ -13,7 +13,7 @@
             </div>
         </span>
         <div class="col-sm-12 m-t-10">
-            <p class="item-content"><%- row.content %></p>
+            <p class="item-content"><%- row.content.substring(0,166)+"... <span class='btn-xs btn-warning btn-inline a-link'> + Read more </span>" %></p>
             <p class="item-footer">
                     <span class="item-subfoot">PUBLISHED : <%- row.created_at.toString().toUpperCase().substring(0,15) %></span>
                     <span class="item-subfoot">BY : <%- row.author.toUpperCase() %></span>
