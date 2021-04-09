@@ -63,13 +63,10 @@ module.exports = (function() {
             {title:'Health Records'}
         ];
         var ok = await Program.insertMany(data);
-        //var ok = await Program().();
-
         res.json(ok); 
     });
 
     /*  MAIN ROUTES */
-
     app.post('/userlogin', (req,res) => {
         const {username,password} = req.body;
         var user = users.filter(row => {
@@ -98,7 +95,6 @@ module.exports = (function() {
 
 
     /* Public Routes */
-
     app.get('/news',async(req,res) => {
         var rows = await Article.find().sort({'_id': -1}).exec();
         res.render('dash',{
@@ -418,10 +414,14 @@ module.exports = (function() {
             // SEND E-MAIL 
             var mems = await Member.find().lean();
             var message = {title: "GAPHS PUBLISHES NEW ARTICLE", content: "Gaphs publishes an article titled : <b>"+req.body.title+"<b>. <a href='https://gaphs.cohk.live/news-detail/"+req.body.id+"'>Click here to read the article.</a> "}
+            var emails = "";
+            var i = 0;
             if(mems && mems.length > 0){
                 for(var mem of mems){
-                    mailer(mem.email,message.title,message.content);
+                    if(mem.email) emails += mem.email+(i == mems.length ? "," : "");
+                    i = i+1;
                 }
+                mailer(emails,message.title,message.content);
             }
         }else{
             try{
@@ -430,11 +430,15 @@ module.exports = (function() {
              // SEND E-MAIL 
              var mems = await Member.find().lean();
              var message = {title: "GAPHS PUBLISHES NEW ARTICLE", content: "Gaphs publishes an article titled : <b>"+req.body.title+"<b>. <a href='https://gaphs.cohk.live/news-detail/"+req.body.id+"'>Click here to read the article.</a> "}
-             if(mems && mems.length > 0){
-                 for(var mem of mems){
-                     mailer(mem.email,message.title,message.content);
-                 }
-             }
+             var emails = "";
+            var i = 0;
+            if(mems && mems.length > 0){
+                for(var mem of mems){
+                    if(mem.email) emails += mem.email+(i == mems.length ? "," : "");
+                    i = i+1;
+                }
+                mailer(emails,message.title,message.content);
+            }
         }
         if(ins){
            res.redirect('/news');
