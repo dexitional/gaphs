@@ -414,14 +414,13 @@ module.exports = (function() {
             // SEND E-MAIL 
             var mems = await Member.find().lean();
             var message = {title: "GAPHS PUBLISHES NEW ARTICLE", content: "Gaphs publishes an article titled : <b>"+req.body.title+"<b>. <a href='https://gaphs.cohk.live/news-detail/"+req.body.id+"'>Click here to read the article.</a> "}
-            var emails = "";
-            var i = 0;
             if(mems && mems.length > 0){
+                var emails = "";
+                var i = 0;
                 for(var mem of mems){
-                    if(mem.email) emails += mem.email+(i == mems.length ? "," : "");
+                    if(mem.email) emails += mem.email+(i != mems.length ? "," : "");
                     i = i+1;
-                }
-                mailer(emails,message.title,message.content);
+                }   mailer(emails,message.title,message.content);
             }
         }else{
             try{
@@ -430,16 +429,15 @@ module.exports = (function() {
              // SEND E-MAIL 
              var mems = await Member.find().lean();
              var message = {title: "GAPHS PUBLISHES NEW ARTICLE", content: "Gaphs publishes an article titled : <b>"+req.body.title+"<b>. <a href='https://gaphs.cohk.live/news-detail/"+req.body.id+"'>Click here to read the article.</a> "}
-             var emails = "";
-            var i = 0;
-            if(mems && mems.length > 0){
+            
+             if(mems && mems.length > 0){
+                var emails = "";
+                var i = 0;
                 for(var mem of mems){
-                    if(mem.email) emails += mem.email+(i == mems.length ? "," : "");
+                    if(mem.email) emails += mem.email+(i != mems.length ? "," : "");
                     i = i+1;
-                }
-                console.log(emails);
-                //mailer(emails,message.title,message.content);
-            }
+                }   mailer(emails,message.title,message.content);
+             }
         }
         if(ins){
            res.redirect('/news');
