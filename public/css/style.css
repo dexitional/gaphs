@@ -16640,6 +16640,7 @@ hr {
   background:#be7426;
   padding:3px 5px;
   text-decoration:none;
+  border-radius:5px;
 }
 
 .to {
@@ -16651,4 +16652,5 @@ hr {
   background:#175a2d;
   padding:3px 5px;
   text-decoration:none;
+  border-radius:5px;
 }
