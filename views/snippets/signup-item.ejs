@@ -48,7 +48,15 @@
                                 </p><br>
                                 <h6 class="list-group-item-heading">LEVEL OR YEAR</h6>
                                 <p class="list-group-item-text">
-                                    <input type="integer" name="level" value="<%- user && user.level %>" placeholder="Level 1 or Year" value="" required class="form-control"/>
+                                    <select name="level" class="form-control">
+                                        <option disabled selected>-- Choose level --</option>
+                                        <option value="100" <%- user && user.level == '100' ? 'selected':'' %>>100</option>
+                                        <option value="200" <%- user && user.level == '200' ? 'selected':'' %>>200</option>
+                                        <option value="300" <%- user && user.level == '300' ? 'selected':'' %>>300</option>
+                                        <option value="400" <%- user && user.level == '400' ? 'selected':'' %>>400</option>
+                                        <option value="500" <%- user && user.level == '500' ? 'selected':'' %>>500</option>
+                                        <option value="600" <%- user && user.level == '600' ? 'selected':'' %>>600</option>
+                                    </select>
                                 </p>
                             </a>
                             <a href="javascript:void(0);" class="list-group-item">

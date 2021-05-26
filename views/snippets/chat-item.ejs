@@ -1,0 +1,29 @@
+<div class="item-cover">
+    <div class="card">
+        <div class="header">
+            <h2><%- room ? 'CLASS' : 'ALL' %> MEMBERS CHAT ROOM</h2>
+        </div>
+        <div class="body">
+            <form class="msgForm">
+                <div class="row">
+                   <div class="col-sm-12">
+                        <div class="list-group">
+                            <a href="javascript:void(0);" class="list-group-item">
+                                <div class="message-cover">&nbsp;</div>
+                            </a>
+                            <a href="javascript:void(0);" class="list-group-item">
+                                <p class="list-group-item-text"><input type="text" name="message" id="message" autocomplete="false" placeholder="Say something !!" class="form-control"/><br/>
+                                <button class="btn btn-block btn-lg bg-pink waves-effect" type="submit">SEND</button></p>
+                            </a>
+                        </div>
+                   </div>
+
+                    <div class="col-sm-12 m-t-20 m-b--5 align-center">
+                        <input type="hidden" id="newuser"  value="<%- user && user.username %>"/>
+                        <input type="hidden" id="room"  value="<%- room ? room : ''%>"/>
+                        <small>&copy <%= new Date().getFullYear() %></small>
+                    </div>
+            </form>
+        </div>
+    </div>
+</div>

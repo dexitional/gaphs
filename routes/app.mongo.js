@@ -11,6 +11,7 @@ module.exports = (function() {
     var studjson = require('../config/student.json');
     var staffjson = require('../config/staff.json');
     var mailer = require('../routes/email');
+    var Jimp = require('jimp');
 
     var mongoose = require('mongoose');
     var Article = require('../model/article');
@@ -195,6 +196,15 @@ module.exports = (function() {
             path = dest+req.body.indexno.toLowerCase()+'.'+file.mimetype.split('/')[1];
             file.mv(path, async(err) =>{
                 if (err) console.log(err);
+                // Resize Image
+                Jimp.read(path, (err, img) => {
+                    if (err) throw err;
+                    img
+                      .resize(256, 256) // resize
+                      .quality(60) // set JPEG quality
+                      .write(path); // save
+                });
+            
             });
             req.body.photo = path.substring(1);
         }
@@ -208,14 +218,14 @@ module.exports = (function() {
            
         }
         if(ins){
-            if(req.session.user.isAdmin && req.session.user.indexno == req.body.indexno){
+            if(req.session.user && req.session.user.isAdmin && req.session.user.indexno == req.body.indexno){
                 var row = await Member.findOne({indexno:req.body.indexno}).populate('prog_id').lean();
                 row.dob = moment(row.dob).format('YYYY-MM-DD');
                 req.session.user = row;
                 req.session.authenticated = true;
                 req.session.save();
                 res.redirect('/profile');
-            }else if(req.session.user.isAdmin){
+            }else if(req.session.user && req.session.user.isAdmin){
                 res.redirect('/members');
             }else{
                 res.redirect('/apps');
@@ -375,6 +385,29 @@ module.exports = (function() {
             title:'MY DUES PAYMENTS',
             rows,
             msg: null
+        });
+    });
+
+
+    // Chats & Rooms
+    app.get('/chat',async(req,res) => {
+        res.render('dash',{
+            user: req.session.user,
+            link:'snippets/chat-item',
+            tab: 'chat',
+            msg: null,
+            room: ''
+        });
+    });
+
+    app.get('/chatroom/:room',async(req,res) => {
+        let room = req.params.room;
+        res.render('dash',{
+            user: req.session.user,
+            link:'snippets/chat-item',
+            tab: 'chat',
+            msg: null,
+            room: room
         });
     });
 

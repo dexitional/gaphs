@@ -14,7 +14,7 @@
         </span>
         <div class="col-sm-12">
             <p class="item-footer">
-                <span class="item-subfoot">PROGRAM : <%- row.prog_id.title.toUpperCase() %> / YEAR : <%- row.level %></span>
+                <span class="item-subfoot">PROGRAM : <%- row.prog_id.title.toUpperCase() %> / LEVEL : <%- row.level %></span>
                 <% if(user && user.isAdmin){ %>
                 <span class="item-subfoot edit-item" data-url="/create-resources?id=<%- row.id %>"><b style="color:brown;cursor:pointer;">EDIT</b></span>
                 <span class="item-subfoot del-item" data-url="/delete-resources/<%- row.id %>"><b style="color:brown;cursor:pointer;">DEL</b></span>

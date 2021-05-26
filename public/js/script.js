@@ -60,8 +60,33 @@ $(document).ready(function(){
         } return false;
     });
 
+    // Slider
+    /*
+    $(".inner").slick({
+        infinite: false,
+        autoplay: true,
+        responsive: [{
+            breakpoint: 1024,
+            settings: {
+            slidesToShow: 1,
+            infinite: true
+            }
 
+        }, {
+            breakpoint: 600,
+            settings: {
+            slidesToShow: 2,
+            dots: true
+            }
 
+        }, {
+            breakpoint: 300,
+            settings: "unslick" 
+        }]
+    });
+    */
+
+    $('.carousel').carousel()
 
    
   /*
@@ -81,4 +106,64 @@ $(document).ready(function(){
         location.href = $(this).data('url');
     });
 */
+
+  /* Chat Application */
+ const room = document.querySelector('#room').value;
+ const socket = room !== '' ? io.of(room) : io();
+ var user;
+ var cover;
+ socket.on('connect', function(){
+     cover = $('.message-cover').html();
+     user = document.querySelector('#newuser').value;
+     if(user) {
+         socket.emit('newuser',{user,room});
+         socket.emit('loadMessage',{});
+     }
+ });
+
+ socket.on('renderMessage',(data) =>{
+    $('.message-cover').html('');
+    for(var row of data){
+        console.log(row);
+        $('.message-cover').append(`
+        <span class="msg-item ${row.username !== user ? 'to':'from'}">
+            <u>${row.username}</u>
+            <em>${row.message}</em>
+            <span>${row.time}</span>
+        </span>
+    `)
+    }
+   
+    var cv = document.querySelector(".message-cover"); 
+    cv.scrollTop = cv.scrollHeight;
+
+ })
+
+ socket.on('receiveMessage',({username,time,msg}) =>{
+     $('.message-cover').append(`
+        <span class="msg-item ${user !== username ? 'to':'from'}">
+            <u>${username}</u>
+            <em>${msg}</em>
+            <span>${time}</span>
+        </span>
+    `);
+     var cv = document.querySelector(".message-cover"); 
+     cv.scrollTop = cv.scrollHeight;
+ })
+
+ $('.msgForm').on('submit', function(e){
+     e.preventDefault();
+     e.stopPropagation();
+     var msg = $('#message').val();
+     if(msg && msg != ''){
+         socket.emit('sendMessage',{user, msg })
+         $('#message').val('')
+     }
+     
+     
+     console.log(msg)
+ })
+     
+     
+
 });

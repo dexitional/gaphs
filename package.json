@@ -4,7 +4,7 @@
   "description": "Content Delivery and Photo Management System for UCC",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon index.js"
   },
   "author": "",
   "license": "ISC",
@@ -17,13 +17,19 @@
     "express-fileupload": "^1.2.1",
     "express-session": "^1.17.1",
     "helmet": "^4.4.1",
+    "jimp": "^0.16.1",
     "moment": "^2.29.1",
     "mongoose": "^5.12.3",
     "mysql": "^2.18.1",
     "node-sqlite3": "github:a-was/node-sqlite3",
     "nodemailer": "^6.5.0",
+    "pimg": "^1.2.1",
     "polka": "^0.5.2",
     "request": "^2.88.2",
+    "socket.io": "^4.1.2",
     "sqlite3": "^5.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
   }
 }

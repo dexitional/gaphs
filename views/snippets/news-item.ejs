@@ -1,9 +1,12 @@
-<div class="item-cover">
-
+<div class="item-cover carousel slide" id="item-cover">
+    <div class="inner carousel-inner">
     <% if(rows && rows.length > 0){
+         var i = 0;
          for(var row of rows){
     %>
-    <a class="item-link row">
+   
+    
+    <a class="item-link row item <%- i == 0 ? 'active':'' %>">
         <span class="a-link" data-url="/news-detail/<%- row.id %>">
             <div class="col-sm-3">
                 <img src="<%- row.image || '/public/assets/news.png' %>" class="img-responsive"/> 
@@ -22,13 +25,26 @@
                     <span class="item-subfoot del-item" data-url="/delete-news/<%- row.id %>"><b style="color:brown;cursor:pointer;">DEL</b></span>
                     <% }%>
             </p>
+            <p class="item-footer">
+                <img class="pointer" src="/public/media/fbshare.png" height="25px" data-sharer="facebook" data-hashtag="hashtag" data-url='https://gaphs.cohk.live/news-detail/<%-row.id %>' data-title='<%- row.title.toUpperCase() %>'/>
+                <img class="pointer" src="/public/media/wtshare.png" height="25px" data-sharer="whatsapp" data-hashtag="hashtag" data-url='https://gaphs.cohk.live/news-detail/<%-row.id %>' data-title='<%- row.title.toUpperCase() %>'/>
+                <img class="pointer" src="/public/media/twshare.png" height="25px" data-sharer="whatsapp" data-hashtag="hashtag" data-url='https://gaphs.cohk.live/news-detail/<%-row.id %>' data-title='<%- row.title.toUpperCase() %>'/>
+            </p>
+            <p>
+                <hr/>
+                <button class="left" href="#item-cover"  data-slide="prev"><span>Prev</span></button>
+                <button class="right " href="#item-cover" data-slide="next"><span>Next</span></button>
+            </p>
         </div>
     </a>
-    <% }}else{ %>
+    <% i++;  }}else{ %>
     <a class="item-link row">
        <div class="col-sm-12">
             <h5 class="item-title">NO ARTICLES PUBLISHED</h5>
         </div>
     </a>
     <% } %>
+      
+
+</div>
 </div>
